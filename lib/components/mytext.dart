@@ -19,6 +19,7 @@ class MyText {
       textAlign: textAlign,
       style: TextStyle(
         fontFamily: 'Poppins',
+          overflow: TextOverflow.clip,
           decoration: decoration,
           fontSize: size.toDouble(),
           fontWeight: fontWeight,

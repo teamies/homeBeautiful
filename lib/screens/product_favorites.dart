@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:home_beautiful/components/mytext.dart';
+import 'package:home_beautiful/models/product.dart';
 import 'package:home_beautiful/screens/my_cart.dart';
 
 import '../core/_config.dart';
@@ -26,22 +27,12 @@ class _product_favoritesState extends State<product_favorites> {
                   child: MyText.baseText(text: 'Favorites', size: 20, color: colorBlack, fontWeight: FontWeight.bold),
                 )),
                 Expanded(
-                    child: ListView(
-                      children: [
-                        productFavorites(),
-                        productFavorites(),
-                        productFavorites(),
-                        productFavorites(),
-                        productFavorites(),
-                        productFavorites(),
-                        productFavorites(),
-                        productFavorites(),
-                        productFavorites(),
-                        productFavorites(),
-                        productFavorites(),
-                        productFavorites(),
-                        productFavorites(),
-                      ],
+                    child: ListView.builder(
+                      itemCount: listProduct.length,
+                      itemBuilder: (context, index){
+                        final item = listProduct[index];
+                       return productFavorites(item.image, item.title, item.price);
+                      },
                     )),
 
                 SizedBox(
@@ -52,9 +43,9 @@ class _product_favoritesState extends State<product_favorites> {
                         backgroundColor: MaterialStateProperty.all(Colors.black),
                     ),
                       onPressed: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => my_cart()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) =>const my_cart()));
                       },
-                      child: Text('Add all to my cart')),
+                      child: const Text('Add all to my cart')),
                 )
               ],
             ),
@@ -65,9 +56,9 @@ class _product_favoritesState extends State<product_favorites> {
   }
 }
 
-Widget productFavorites(){
+Widget productFavorites(String image, String title, String price){
   return Padding(
-    padding:  EdgeInsets.only(top: 19),
+    padding:  EdgeInsets.only(bottom: 19),
     child: Column(
       children: [
         Container(
@@ -80,7 +71,7 @@ Widget productFavorites(){
                 height: 100,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('assets/img/table.png'),
+                    image: AssetImage(image),
                   ),
                   borderRadius: BorderRadius.circular(10)
                 ),
@@ -93,10 +84,10 @@ Widget productFavorites(){
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              MyText.baseText(text:'Minimal Stand', size: 14),
+                              MyText.baseText(text:title, size: 14),
                               Padding(
                                 padding: const EdgeInsets.only(top: 5),
-                                child: MyText.baseText(text: '\$ 25.00', size: 16, fontWeight: FontWeight.bold),
+                                child: MyText.baseText(text: '\$ $price', size: 16, fontWeight: FontWeight.bold),
                               ),
                             ],
                           ),

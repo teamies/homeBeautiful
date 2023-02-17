@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:home_beautiful/screens/notification.dart';
 
 import 'screens/my_cart.dart';
 import 'screens/product_favorites.dart';
+import 'screens/profile.dart';
 
 class home extends StatefulWidget {
   const home({Key? key}) : super(key: key);
