@@ -23,4 +23,23 @@ class MyText {
           color: color.toColor()),
     );
   }
+
+   static TextStyle textStyle(
+      {
+      dynamic size = 18,
+      FontWeight fontWeight = FontWeight.w500,
+      String color = cnf.colorBlack,
+      TextAlign? textAlign,
+      TextDecoration? decoration}) {
+    return TextStyle(
+          decoration: decoration,
+          fontSize: size.toDouble(),
+          fontWeight: fontWeight,
+          color: color.toColor());
+  }
+}
+class appStyleText{
+  static const TextStyle textStyle = TextStyle(
+    fontSize: 14, color: Colors.white, fontWeight: FontWeight.normal
+  );
 }
