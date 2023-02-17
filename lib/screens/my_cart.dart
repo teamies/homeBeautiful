@@ -121,7 +121,7 @@ class _my_cartState extends State<my_cart> {
   }
 }
 
-Widget productFavorites(String image, String title, String price) {
+Widget productFavorites(String image, String title, double price) {
   return Padding(
     padding: EdgeInsets.only(bottom: 19),
     child: Column(
@@ -152,7 +152,7 @@ Widget productFavorites(String image, String title, String price) {
                           child: Padding(
                             padding: const EdgeInsets.only(top: 5),
                             child: MyText.baseText(
-                                text: '\$ $price',
+                                text: '\$ $price\0',
                                 size: 16,
                                 fontWeight: FontWeight.bold),
                           ),

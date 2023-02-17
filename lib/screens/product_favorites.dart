@@ -56,7 +56,7 @@ class _product_favoritesState extends State<product_favorites> {
   }
 }
 
-Widget productFavorites(String image, String title, String price){
+Widget productFavorites(String image, String title, double price){
   return Padding(
     padding:  EdgeInsets.only(bottom: 19),
     child: Column(
@@ -87,7 +87,7 @@ Widget productFavorites(String image, String title, String price){
                               MyText.baseText(text:title, size: 14),
                               Padding(
                                 padding: const EdgeInsets.only(top: 5),
-                                child: MyText.baseText(text: '\$ $price', size: 16, fontWeight: FontWeight.bold),
+                                child: MyText.baseText(text: '\$ $price\0', size: 16, fontWeight: FontWeight.bold),
                               ),
                             ],
                           ),

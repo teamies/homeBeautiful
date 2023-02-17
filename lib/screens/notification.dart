@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:home_beautiful/components/mytext.dart';
-import 'package:home_beautiful/core/_config.dart';
 import 'package:home_beautiful/models/notificationModel.dart';
 
 class notification extends StatefulWidget {
@@ -19,22 +18,27 @@ class _notificationState extends State<notification> {
           padding: const EdgeInsets.all(20),
           child: Column(
             children: [
-              Center(
-                child: MyText.baseText(text: 'Notification', fontWeight: FontWeight.bold, size: 20),
-              ),
-              Padding(
-                  padding: EdgeInsets.only(top: 20),
-              child: Container(
-                height: MediaQuery.of(context).size.height*0.8,
-                child: ListView.builder(
-                  itemCount: listNotification.length,
-                  itemBuilder: (context, index){
-                    final item = listNotification[index];
-                    return product(item.image, item.title, item.comment, item.type, item.color);
-                  },
 
-                ),
-              ),)
+               Container(
+                 child: Center(
+                    child: MyText.baseText(text: 'Notification', fontWeight: FontWeight.bold, size: 20),
+                  ),
+               ),
+
+              Expanded(
+                child: Padding(
+                    padding: EdgeInsets.only(top: 20),
+                child: Container(
+                  child: ListView.builder(
+                    itemCount: listNotification.length,
+                    itemBuilder: (context, index){
+                      final item = listNotification[index];
+                      return product(item.image, item.title, item.comment, item.type, item.color);
+                    },
+
+                  ),
+                ),),
+              ),
             ],
           ),
         ),

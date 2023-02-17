@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:home_beautiful/components/mytext.dart';
 import 'package:home_beautiful/core/_config.dart';
+import 'package:home_beautiful/screens/my_reviews.dart';
 
 class profile extends StatefulWidget {
   const profile({Key? key}) : super(key: key);
@@ -46,19 +47,25 @@ class _profileState extends State<profile> {
                 ),
               ),
 
-              Container(
-                height: MediaQuery.of(context).size.height*0.7,
-                padding: const EdgeInsets.only(top: 20),
-                child: Column(
-                  children: [
-                    list('My orders', 'Already have orders 10'),
-                    list('Shipping Addresses','03 Adresses'),
-                    list('Payment Method', 'You have 2 cards'),
-                    list('My reviews', 'Reviews for 5 items'),
-                    list('Setting', 'Notification, Password, FAQ, Contact')
-                  ],
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.only(top: 15),
+                  child: Column(
+                    children: [
+                      list('My orders', 'Already have orders 10'),
+                      list('Shipping Addresses','03 Adresses'),
+                      list('Payment Method', 'You have 2 cards'),
+                      GestureDetector(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => my_reviews() ));
+                        },
+                          child: list('My reviews', 'Reviews for 5 items')),
+                      list('Setting', 'Notification, Password, FAQ, Contact')
+                    ],
+                  ),
                 ),
-              )
+              ),
+
             ],
           ),
         ),

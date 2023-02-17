@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:home_beautiful/components/mytext.dart';
 import 'package:home_beautiful/core/_config.dart';
+import 'package:home_beautiful/components/buttonBar.dart';
 
 class congrats extends StatefulWidget {
   const congrats({Key? key}) : super(key: key);
@@ -60,7 +61,9 @@ class _congratsState extends State<congrats> {
                               style: ButtonStyle(
                                 backgroundColor: MaterialStateProperty.all(Colors.black),
                               ),
-                              onPressed: (){},
+                              onPressed: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => buttonBar()));
+                              },
                               child: MyText.baseText(text: 'Back to home', color: colorWhite),
                             ),
                           ),

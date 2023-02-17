@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:home_beautiful/screens/notification.dart';
+import 'package:home_beautiful/screens/Boarding.dart';
+import 'package:home_beautiful/screens/my_cart.dart';
+import 'package:home_beautiful/screens/my_reviews.dart';
 
-import 'screens/my_cart.dart';
 import 'screens/product_favorites.dart';
-import 'screens/profile.dart';
 
 class home extends StatefulWidget {
   const home({Key? key}) : super(key: key);
@@ -15,8 +15,11 @@ class home extends StatefulWidget {
 class _homeState extends State<home> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: product_favorites()
-      );
+    return Scaffold(
+      body: Container(
+        width: double.infinity,
+        child: Boarding()
+      ),
+    );
   }
 }
