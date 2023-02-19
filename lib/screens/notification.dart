@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:home_beautiful/components/mytext.dart';
+import 'package:home_beautiful/components/titleBar.dart';
 import 'package:home_beautiful/models/notificationModel.dart';
 
 class notification extends StatefulWidget {
@@ -18,12 +19,7 @@ class _notificationState extends State<notification> {
           padding: const EdgeInsets.all(20),
           child: Column(
             children: [
-
-               Container(
-                 child: Center(
-                    child: MyText.baseText(text: 'Notification', fontWeight: FontWeight.bold, size: 20),
-                  ),
-               ),
+titleBar('Notification'),
 
               Expanded(
                 child: Padding(

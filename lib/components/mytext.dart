@@ -16,7 +16,7 @@ class MyText {
       textAlign: textAlign,
       style: TextStyle(
           fontFamily: 'Poppins',
-          overflow: TextOverflow.ellipsis,
+          //overflow: TextOverflow.ellipsis,
           decoration: decoration,
           fontSize: size.toDouble(),
           fontWeight: fontWeight,

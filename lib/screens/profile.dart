@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:home_beautiful/components/mytext.dart';
+import 'package:home_beautiful/components/titleBar.dart';
 import 'package:home_beautiful/core/_config.dart';
 import 'package:home_beautiful/screens/my_reviews.dart';
 
@@ -19,10 +20,8 @@ class _profileState extends State<profile> {
           padding: EdgeInsets.all(20),
           child: Column(
             children: [
-              Center(child: MyText.baseText(text: 'Profile', fontWeight: FontWeight.bold)),
-              Padding(
-                  padding: EdgeInsets.only(top: 20),
-                child: Row(
+              titleBar('Profile'),
+              Row(
                   children: [
                     SizedBox(
                       width: 90,
@@ -44,7 +43,7 @@ class _profileState extends State<profile> {
                     )
 
                   ],
-                ),
+
               ),
 
               Expanded(

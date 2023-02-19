@@ -12,11 +12,13 @@ class LogIn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        // padding: EdgeInsets.all(50),
-        child: Column(
-          children: [Header(), formLogIn(context)],
+      body: SingleChildScrollView(
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          // padding: EdgeInsets.all(50),
+          child: Column(
+            children: [Header(), formLogIn(context)],
+          ),
         ),
       ),
     );
@@ -66,7 +68,7 @@ class LogIn extends StatelessWidget {
               child: MyText.baseText(text: 'Sign Up', color: colorGray),
               onTap: () {
                 Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => SignUp()));
+                    context, MaterialPageRoute(builder: (context) => SingUp()));
               },
             )
           ],

@@ -63,7 +63,7 @@ class _my_reviewsState extends State<my_reviews> {
   }
   Widget listReview(String image, String title, double price, String comment){
     return Padding(
-      padding: const EdgeInsets.only(bottom: 19),
+      padding: const EdgeInsets.only(bottom: 15),
       child: Card(
         child: Container(
           width: 357,
@@ -75,8 +75,8 @@ class _my_reviewsState extends State<my_reviews> {
               Row(
                 children: [
                   Container(
-                    width: 100,
-                    height: 100,
+                    width: 70,
+                    height: 70,
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage(image)
@@ -85,14 +85,14 @@ class _my_reviewsState extends State<my_reviews> {
                     ),
                   ),
                    Padding(
-                     padding: const EdgeInsets.only(left: 16),
+                     padding: const EdgeInsets.only(left: 14),
                      child: Column(
                        crossAxisAlignment: CrossAxisAlignment.start,
                        children: [
-                         MyText.baseText(text: title, size: 16),
+                         MyText.baseText(text: title),
                          Padding(
                            padding: const EdgeInsets.only(top: 5),
-                           child: MyText.baseText(text: '\$ $price\0', size: 16, fontWeight: FontWeight.bold),
+                           child: MyText.baseText(text: '\$ $price\0', fontWeight: FontWeight.bold),
                          )
                        ],
                      ),
@@ -100,9 +100,8 @@ class _my_reviewsState extends State<my_reviews> {
                 ],
               ),
 
-              Container(
-
-                padding: EdgeInsets.only(top: 16),
+              Padding(
+                padding: EdgeInsets.only(top: 14, bottom: 14),
                 child: Row(
                   children: [
                     Expanded(
@@ -119,10 +118,8 @@ class _my_reviewsState extends State<my_reviews> {
                   ],
                 ),
               ),
-               Padding(
-                 padding: const EdgeInsets.only(top: 16),
-                 child: MyText.baseText(text: comment, size: 14, color: colorGray),
-               )
+                MyText.baseText(text: comment, size: 13, color: colorGray),
+
             ],
           ),
         ),

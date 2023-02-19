@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_beautiful/components/titleBar.dart';
 import 'package:home_beautiful/screens/congrats.dart';
 
 import '../components/mytext.dart';
@@ -28,8 +29,7 @@ class _check_outState extends State<check_out> {
                       children: [
                         Expanded(
                           flex: 1,
-                          child: Center(
-                            child: IconButton(
+                          child: IconButton(
                               onPressed: (){
                                 Navigator.pop(context);
                               },
@@ -37,14 +37,10 @@ class _check_outState extends State<check_out> {
                               color: Colors.black,
                             ),
                           ),
-                        ),
+
                         Expanded(
                           flex: 20,
-                          child: Center(
-                              child: MyText.baseText(
-                                  text: 'Check Out',
-                                  size: 20,
-                                  fontWeight: FontWeight.bold)),
+                          child: titleBar('Check Out')
                         ),
                       ],
                     ),

@@ -3,6 +3,7 @@ import 'package:home_beautiful/components/mytext.dart';
 import 'package:home_beautiful/models/product.dart';
 import 'package:home_beautiful/screens/my_cart.dart';
 
+import '../components/titleBar.dart';
 import '../core/_config.dart';
 
 class product_favorites extends StatefulWidget {
@@ -22,10 +23,7 @@ class _product_favoritesState extends State<product_favorites> {
             padding: const EdgeInsets.all(20),
             child: Column(
               children: [
-                Center(child: Padding(
-                  padding: const EdgeInsets.only(top: 8, bottom: 20),
-                  child: MyText.baseText(text: 'Favorites', size: 20, color: colorBlack, fontWeight: FontWeight.bold),
-                )),
+               titleBar('Favorites'),
                 Expanded(
                     child: ListView.builder(
                       itemCount: listProduct.length,

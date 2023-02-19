@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_beautiful/components/titleBar.dart';
 import 'package:home_beautiful/models/product.dart';
 import 'package:home_beautiful/screens/check_out.dart';
 
@@ -39,12 +40,7 @@ class _my_cartState extends State<my_cart> {
                           ),
                           Expanded(
                             flex: 20,
-                            child: Center(
-                                child: MyText.baseText(
-                                    text: 'My cart',
-                                    size: 20,
-                                    color: colorBlack,
-                                    fontWeight: FontWeight.bold)),
+                            child: titleBar('My cart')
                           ),
                         ],
 
