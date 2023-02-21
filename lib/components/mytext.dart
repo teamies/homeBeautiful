@@ -3,9 +3,7 @@ import 'package:home_beautiful/core/tocolor.dart';
 import 'package:home_beautiful/core/_config.dart' as cnf;
 
 class MyText {
-  /**
-   * Dành cho các text cơ bản thường dùng trong app
-   */
+  
   static Widget baseText(
       {String text = 'base',
       dynamic size = 18,
@@ -17,14 +15,15 @@ class MyText {
       text,
       textAlign: textAlign,
       style: TextStyle(
+          fontFamily: 'Poppins',
+          //overflow: TextOverflow.ellipsis,
           decoration: decoration,
           fontSize: size.toDouble(),
           fontWeight: fontWeight,
           color: color.toColor()),
     );
   }
-
-   static TextStyle textStyle(
+  static TextStyle textStyle(
       {
       dynamic size = 18,
       FontWeight fontWeight = FontWeight.w500,
@@ -37,9 +36,4 @@ class MyText {
           fontWeight: fontWeight,
           color: color.toColor());
   }
-}
-class appStyleText{
-  static const TextStyle textStyle = TextStyle(
-    fontSize: 14, color: Colors.white, fontWeight: FontWeight.normal
-  );
 }

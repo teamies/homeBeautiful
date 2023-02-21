@@ -20,7 +20,7 @@ class _LogInState extends State<LogIn> {
       body: SingleChildScrollView(
         child: Container(
           width: MediaQuery.of(context).size.width,
-          // padding: EdgeInsets.all(50),
+          padding: EdgeInsets.all(20),
           child: Column(
             children: [Header(), formLogIn(context)],
           ),
@@ -42,7 +42,6 @@ class _LogInState extends State<LogIn> {
 
   Widget formLogIn(BuildContext context) {
     return Card(
-      margin: EdgeInsets.all(20),
       child: Container(
         // height: double.infinity*2/3,
         height: MediaQuery.of(context).size.height * 1 / 2,

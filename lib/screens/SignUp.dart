@@ -18,9 +18,9 @@ class _SignUpState extends State<SignUp> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
+          height: MediaQuery.of(context).size.height,
           padding: EdgeInsets.all(20),
           width: MediaQuery.of(context).size.width,
-          // padding: EdgeInsets.all(50),
           child: Column(
             children: [Header(), formLogIn(context)],
           ),
@@ -30,13 +30,14 @@ class _SignUpState extends State<SignUp> {
   }
 
   Widget Header() {
-    return Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+    return Column(crossAxisAlignment: CrossAxisAlignment.center, 
+    children: [
       Container(
-          padding: EdgeInsets.only(top: 50, bottom: 50),
-          child: Image(image: AssetImage("assets/img/Logo.png"))),
+        padding: EdgeInsets.only(top: 50, bottom: 50),
+        child: Image(image: AssetImage("assets/img/Logo.png"))),
       MyText.baseText(text: 'Hello!', fontWeight: FontWeight.w400, size: 30),
       MyText.baseText(
-          text: 'WELCOME BACK', size: 40, fontWeight: FontWeight.w700)
+        text: 'WELCOME BACK', size: 40, fontWeight: FontWeight.w700)
     ]);
   }
 
