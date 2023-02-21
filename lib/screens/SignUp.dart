@@ -5,17 +5,25 @@ import 'package:home_beautiful/core/_config.dart';
 import 'package:home_beautiful/screens/LogIn.dart';
 import 'package:home_beautiful/screens/SignUp.dart';
 
-class SignUp extends StatelessWidget {
+class SignUp extends StatefulWidget {
   const SignUp({super.key});
 
   @override
+  State<SignUp> createState() => _SignUpState();
+}
+
+class _SignUpState extends State<SignUp> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        // padding: EdgeInsets.all(50),
-        child: Column(
-          children: [Header(), formLogIn(context)],
+      body: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.all(20),
+          width: MediaQuery.of(context).size.width,
+          // padding: EdgeInsets.all(50),
+          child: Column(
+            children: [Header(), formLogIn(context)],
+          ),
         ),
       ),
     );
@@ -33,45 +41,62 @@ class SignUp extends StatelessWidget {
   }
 
   Widget formLogIn(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.all(20),
-      child: Container(
-        // height: double.infinity*2/3,
-        height: MediaQuery.of(context).size.height*3/5,
-        padding: EdgeInsets.only(top: 50, bottom: 50, left: 28, right: 28),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            formTextField(
-              labelText: 'Name',
-              obscureText: false
-            ),
-            formTextField(
-              labelText: 'Email',
-              obscureText: true
-            ),
-            formTextField(
-              labelText: 'Password',
-              obscureText: true
-            ),
-            formTextField(
-              labelText: 'Confirm Password',
-              obscureText: true
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                MyText.baseText(text:'Already have account?', color: colorGray),
-                GestureDetector(
-                  child: MyText.baseText(text: 'Sign in' ),
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => LogIn()));
+    return Expanded(
+      child: Card(
+        child: Container(
+          // height: double.infinity*2/3,
+          height: MediaQuery.of(context).size.height*3/5,
+          padding: EdgeInsets.only(top: 50, bottom: 50, left: 28, right: 28),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              formTextField(
+                labelText: 'Name',
+                obscureText: false
+              ),
+              formTextField(
+                labelText: 'Email',
+                obscureText: true
+              ),
+              formTextField(
+                labelText: 'Password',
+                obscureText: true
+              ),
+              formTextField(
+                labelText: 'Confirm Password',
+                obscureText: true
+              ),
+              Container(
+                width: double.infinity,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => LogIn()));
                   },
+                  child: MyText.baseText(text: 'Log in', color: colorWhite),
+                  style: TextButton.styleFrom(
+                    backgroundColor: Color(0xff242424),
+                    padding: EdgeInsets.only(top: 15, bottom: 15),
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(8))),
+                  ),
                 ),
-              ],
-            )
-            
-          ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  MyText.baseText(text:'Already have account?', color: colorGray),
+                  GestureDetector(
+                    child: MyText.baseText(text: 'Sign in' ),
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => LogIn()));
+                    },
+                  ),
+                ],
+              )
+              
+            ],
+          ),
         ),
       ),
     );

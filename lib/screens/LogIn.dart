@@ -6,17 +6,24 @@ import 'package:home_beautiful/core/_config.dart';
 import 'package:home_beautiful/screens/Home.dart';
 import 'package:home_beautiful/screens/SignUp.dart';
 
-class LogIn extends StatelessWidget {
+class LogIn extends StatefulWidget {
   const LogIn({super.key});
 
   @override
+  State<LogIn> createState() => _LogInState();
+}
+
+class _LogInState extends State<LogIn> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        // padding: EdgeInsets.all(50),
-        child: Column(
-          children: [Header(), formLogIn(context)],
+      body: SingleChildScrollView(
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          // padding: EdgeInsets.all(50),
+          child: Column(
+            children: [Header(), formLogIn(context)],
+          ),
         ),
       ),
     );

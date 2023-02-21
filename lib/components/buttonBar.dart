@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:home_beautiful/screens/Home.dart';
 import 'package:home_beautiful/screens/LogIn.dart';
+import 'package:home_beautiful/screens/Product.dart';
 
 class buttonBar extends StatefulWidget {
   const buttonBar({super.key});
@@ -13,7 +14,7 @@ class buttonBar extends StatefulWidget {
 
 class _buttonBarState extends State<buttonBar> {
   int _selectedIndex = 0;
-  List tap = [Home(), LogIn(), Home(), Home()];
+  List tap = [Home(), Home(), Home(), Home()];
 
   @override
   Widget build(BuildContext context) {
