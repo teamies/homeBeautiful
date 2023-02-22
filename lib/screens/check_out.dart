@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:home_beautiful/components/titleBar.dart';
 import 'package:home_beautiful/screens/congrats.dart';
+import 'package:swipeable_page_route/swipeable_page_route.dart';
 
 import '../components/mytext.dart';
 import '../core/_config.dart';
@@ -133,7 +134,7 @@ class _check_outState extends State<check_out> {
                   width: double.infinity,
                   height: 50,
                   child: ElevatedButton(onPressed: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => congrats()));
+                    Navigator.push(context, SwipeablePageRoute(builder: (context) => congrats()));
                   },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(Colors.black)

@@ -1,7 +1,6 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
-import 'package:home_beautiful/screens/Home.dart';
-import 'package:home_beautiful/screens/LogIn.dart';
-
+import '../screens/Home.dart';
 import '../screens/notification.dart';
 import '../screens/product_favorites.dart';
 import '../screens/profile.dart';
@@ -20,7 +19,19 @@ class _buttonBarState extends State<buttonBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: tap[_selectedIndex] ,
+
+      body: PageTransitionSwitcher(
+        duration: Duration(milliseconds: 600),
+        transitionBuilder: (child, primaryAnimation, secondaryAnimation) {
+          return SharedAxisTransition(
+            animation: primaryAnimation,
+            secondaryAnimation: secondaryAnimation,
+            transitionType: SharedAxisTransitionType.horizontal,
+            child: child,
+          );
+        },
+        child: tap[_selectedIndex],
+      ) ,
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         showUnselectedLabels: false,

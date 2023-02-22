@@ -3,12 +3,17 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:home_beautiful/components/buttonBar.dart';
 import 'package:home_beautiful/components/mytext.dart';
 import 'package:home_beautiful/core/_config.dart';
-import 'package:home_beautiful/screens/Home.dart';
-import 'package:home_beautiful/screens/SignUp.dart';
+import 'package:home_beautiful/screens/SingUp.dart';
 
-class LogIn extends StatelessWidget {
+
+class LogIn extends StatefulWidget {
   const LogIn({super.key});
 
+  @override
+  State<LogIn> createState() => _LogInState();
+}
+
+class _LogInState extends State<LogIn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,7 +73,7 @@ class LogIn extends StatelessWidget {
               child: MyText.baseText(text: 'Sign Up', color: colorGray),
               onTap: () {
                 Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => SingUp()));
+                    context, MaterialPageRoute(builder: (context) => SignUp()));
               },
             )
           ],

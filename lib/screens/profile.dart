@@ -3,6 +3,7 @@ import 'package:home_beautiful/components/mytext.dart';
 import 'package:home_beautiful/components/titleBar.dart';
 import 'package:home_beautiful/core/_config.dart';
 import 'package:home_beautiful/screens/my_reviews.dart';
+import 'package:swipeable_page_route/swipeable_page_route.dart';
 
 class profile extends StatefulWidget {
   const profile({Key? key}) : super(key: key);
@@ -21,33 +22,34 @@ class _profileState extends State<profile> {
           child: Column(
             children: [
               titleBar('Profile'),
-              Row(
-                  children: [
-                    SizedBox(
-                      width: 90,
-                      child: CircleAvatar(
-                        radius: 50,
-                        backgroundImage: AssetImage('assets/img/img.png'),
+              Expanded(
+                child: Row(
+                    children: [
+                      SizedBox(
+                        width: 90,
+                        child: CircleAvatar(
+                          radius: 50,
+                          backgroundImage: AssetImage('assets/img/img.png'),
+                        ),
                       ),
-                    ),
 
-                    Padding(
-                        padding: EdgeInsets.only(left: 20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          MyText.baseText(text: 'Kristin Watson', fontWeight: FontWeight.bold),
-                          MyText.baseText(text: 'bruno203@gmail.com', size: 14),
-                        ],
-                      ),
-                    )
+                      Padding(
+                          padding: EdgeInsets.only(left: 20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            MyText.baseText(text: 'Kristin Watson', fontWeight: FontWeight.bold),
+                            MyText.baseText(text: 'bruno203@gmail.com', size: 14),
+                          ],
+                        ),
+                      )
 
-                  ],
+                    ],
 
+                ),
               ),
 
-              Expanded(
-                child: Container(
+               Container(
                   padding: const EdgeInsets.only(top: 15),
                   child: Column(
                     children: [
@@ -56,14 +58,14 @@ class _profileState extends State<profile> {
                       list('Payment Method', 'You have 2 cards'),
                       GestureDetector(
                         onTap: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => my_reviews() ));
+                          Navigator.push(context, SwipeablePageRoute(builder: (context) => my_reviews()) );
                         },
-                          child: list('My reviews', 'Reviews for 5 items')),
+
+                              child: list('My reviews', 'Reviews for 5 items')),
                       list('Setting', 'Notification, Password, FAQ, Contact')
                     ],
                   ),
                 ),
-              ),
 
             ],
           ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:home_beautiful/components/titleBar.dart';
 import 'package:home_beautiful/models/product.dart';
 import 'package:home_beautiful/screens/check_out.dart';
+import 'package:swipeable_page_route/swipeable_page_route.dart';
 
 import '../components/mytext.dart';
 import '../core/_config.dart';
@@ -103,7 +104,7 @@ class _my_cartState extends State<my_cart> {
                                 MaterialStateProperty.all(Colors.black),
                           ),
                           onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => check_out()));
+                            Navigator.push(context, SwipeablePageRoute(builder: (context) => check_out()));
                           },
                           child:const Text('Check Out')),
                     )
