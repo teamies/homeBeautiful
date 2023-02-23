@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:home_beautiful/components/mytext.dart';
 import 'package:home_beautiful/models/product.dart';
 import 'package:home_beautiful/screens/my_cart.dart';
+import 'package:swipeable_page_route/swipeable_page_route.dart';
 
 import '../components/titleBar.dart';
 import '../core/_config.dart';
@@ -41,7 +42,7 @@ class _product_favoritesState extends State<product_favorites> {
                         backgroundColor: MaterialStateProperty.all(Colors.black),
                     ),
                       onPressed: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) =>const my_cart()));
+                      Navigator.push(context, SwipeablePageRoute(builder: (context) =>const my_cart()));
                       },
                       child: const Text('Add all to my cart')),
                 )

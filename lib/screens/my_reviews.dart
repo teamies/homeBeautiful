@@ -16,49 +16,51 @@ class _my_reviewsState extends State<my_reviews> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.all(20),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Center(
-                      child: IconButton(
-                        onPressed: (){
-                          Navigator.pop(context);
-                        },
-                        icon:const Icon(Icons.arrow_back_ios),
-                        color: Colors.black,
+          child: Padding(
+            padding: EdgeInsets.all(20),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Center(
+                        child: IconButton(
+                          onPressed: (){
+                            Navigator.pop(context);
+                          },
+                          icon:const Icon(Icons.arrow_back_ios),
+                          color: Colors.black,
+                        ),
                       ),
                     ),
-                  ),
-                  Expanded(
-                    flex: 20,
-                    child: Center(
-                        child: MyText.baseText(
-                            text: 'My reviews',
-                            size: 20,
-                            color: colorBlack,
-                            fontWeight: FontWeight.bold)),
-                  ),
-                ],
+                    Expanded(
+                      flex: 20,
+                        child:  Center(
+                              child: MyText.baseText(
+                                  text: 'My reviews',
+                                  size: 20,
+                                  color: colorBlack,
+                                  fontWeight: FontWeight.bold)),
+                        ),
 
-              ),
 
-              Expanded(
-                  child: ListView.builder(
-                    itemCount: listMyReview.length,
-                      itemBuilder: (context, index){
-                      final item = listMyReview[index];
-                        return listReview(item.image, item.title, item.price, item.comment);
-                      }))
-            ],
+                  ],
+
+                ),
+
+                Expanded(
+                    child: ListView.builder(
+                      itemCount: listMyReview.length,
+                        itemBuilder: (context, index){
+                        final item = listMyReview[index];
+                          return listReview(item.image, item.title, item.price, item.comment);
+                        }))
+              ],
+            ),
           ),
         ),
-      ),
     );
   }
   Widget listReview(String image, String title, double price, String comment){
