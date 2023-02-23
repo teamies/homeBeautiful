@@ -5,6 +5,7 @@ import 'package:home_beautiful/components/mytext.dart';
 import 'package:home_beautiful/core/_config.dart';
 import 'package:home_beautiful/screens/Home.dart';
 import 'package:home_beautiful/screens/SignUp.dart';
+import 'package:swipeable_page_route/swipeable_page_route.dart';
 
 class LogIn extends StatefulWidget {
   const LogIn({super.key});
@@ -69,12 +70,12 @@ class _LogInState extends State<LogIn> {
               ),
             ),
             GestureDetector(
-              child: MyText.baseText(text: 'Sign Up', color: colorGray),
-              onTap: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => SignUp()));
-              },
-            )
+                child: MyText.baseText(text: 'Sign Up', color: colorGray),
+                onTap: () {
+                  Navigator.push(
+                      context, SwipeablePageRoute(builder: (context) => SignUp()));
+                },
+              ),
           ],
         ),
       ),

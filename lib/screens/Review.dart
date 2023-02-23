@@ -64,7 +64,7 @@ class _ReviewState extends State<Review> {
             ),
           GestureDetector(
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=> Product()));
+              Navigator.pop(context);
             },
             child: Icon(
               Icons.chevron_left,
@@ -82,16 +82,19 @@ class _ReviewState extends State<Review> {
       height: 140,
       child: Row(
         children: [
-          Container(
-            margin: EdgeInsets.only(right: 20),
-            width: 100,
-            height: 100,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                 alignment: Alignment.center,
-                  fit: BoxFit.cover,
-                  image: AssetImage(listProduct[0].image)
-               )
+          Hero(
+            tag: 'heroImg',
+            child: Container(
+              margin: EdgeInsets.only(right: 20),
+              width: 100,
+              height: 100,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                   alignment: Alignment.center,
+                    fit: BoxFit.cover,
+                    image: AssetImage(listProduct[0].image)
+                 )
+              ),
             ),
           ),
           Column(

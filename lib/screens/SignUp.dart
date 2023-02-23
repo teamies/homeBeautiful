@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:home_beautiful/components/mytext.dart';
 import 'package:home_beautiful/core/_config.dart';
 import 'package:home_beautiful/screens/LogIn.dart';
-import 'package:home_beautiful/screens/SignUp.dart';
+import 'package:swipeable_page_route/swipeable_page_route.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -72,9 +72,9 @@ class _SignUpState extends State<SignUp> {
                 child: TextButton(
                   onPressed: () {
                     Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => LogIn()));
+                      context, SwipeablePageRoute( transitionBuilder: (context, animation, secondaryAnimation, isSwipeGesture, child) => LogIn(),  builder: (context) => LogIn()));
                   },
-                  child: MyText.baseText(text: 'Log in', color: colorWhite),
+                  child: MyText.baseText(text: 'Sign up', color: colorWhite),
                   style: TextButton.styleFrom(
                     backgroundColor: Color(0xff242424),
                     padding: EdgeInsets.only(top: 15, bottom: 15),
@@ -90,7 +90,7 @@ class _SignUpState extends State<SignUp> {
                   GestureDetector(
                     child: MyText.baseText(text: 'Sign in' ),
                     onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => LogIn()));
+                      Navigator.pop(context);
                     },
                   ),
                 ],

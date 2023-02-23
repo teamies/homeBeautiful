@@ -9,27 +9,47 @@ import 'package:home_beautiful/models/product.dart';
 import 'package:home_beautiful/screens/Home.dart';
 import 'package:home_beautiful/screens/Review.dart';
 
+
 class Product extends StatefulWidget {
-  const Product({super.key});
+  final product products;
+  const Product({super.key, required this.products});
 
   @override
   State<Product> createState() => _ProductState();
 }
 
 class _ProductState extends State<Product> {
+  bool check = true;
+  bool checkcolorWhite = true;
+  bool checkcolorBrown = false;
+  bool checkcolorNude = false;
+  int _counter = 0;
+
+  void _incrementCounter() {
+    setState(() {
+      _counter++;
+    });
+  }
+  void _decreasecounter() {
+    setState(() {
+      _counter >0 ? _counter-- : _counter;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+  
     return Scaffold(
       body: Container(
         child: Column(
           children: [
             Header(), 
-            contents(
-              title: listProduct[0].title,
-              price: listProduct[0].price,
+            contents( 
+              title: this.widget.products.title,
+              price: this.widget.products.price,
               rate: 3.0,
               sumEvaluate: '(50 reviews)',
-              content: 'Nice Furniture with good delivery. The delivery time is very fast. Then products look like exactly the picture in the app. Besides, color is also the same and quality is very good despite very cheap price'
+              content: this.widget.products.infPrp
             )
             
           ],
@@ -44,17 +64,20 @@ class _ProductState extends State<Product> {
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Container(
-              width: MediaQuery.of(context).size.width*8/9,
-              height: MediaQuery.of(context).size.height/2,
-              alignment: Alignment.bottomRight,
-              decoration: BoxDecoration(
-                // border: Border.all(),
-                borderRadius: BorderRadius.only(bottomLeft: Radius.circular(50)),
-                image: DecorationImage(
-                  alignment: Alignment.centerRight,
-                  fit: BoxFit.cover,
-                  image: AssetImage("assets/img/lamp.png"))),
+            Hero(
+              tag: 'heroImg',
+              child: Container(
+                width: MediaQuery.of(context).size.width*8/9,
+                height: MediaQuery.of(context).size.height/2,
+                alignment: Alignment.bottomRight,
+                decoration: BoxDecoration(
+                  // border: Border.all(),
+                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(50)),
+                  image: DecorationImage(
+                    alignment: Alignment.centerRight,
+                    fit: BoxFit.cover,
+                    image: AssetImage(this.widget.products.image))),
+              ),
             ),
           ],
         ),
@@ -86,29 +109,56 @@ class _ProductState extends State<Product> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Container(
-                    width: 30,
-                    height: 30,
-                    decoration: BoxDecoration(
-                      border: Border.all(width: 4) ,
-                      borderRadius: BorderRadius.all(Radius.circular(25)),
-                      color: Color(0xFFFFFFFF)),
+                  GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          checkcolorWhite =! checkcolorWhite;
+                          checkcolorBrown = false;
+                          checkcolorNude = false;
+                        });
+                      },
+                    child: Container(
+                      width: 30,
+                      height: 30,
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 4,color: checkcolorWhite ? Colors.black : Color(0xFFF0F0F0)),
+                        borderRadius: BorderRadius.all(Radius.circular(25)),
+                        color: Color(0xFFFFFFFF)),
+                    ),
                   ),
-                  Container(
-                    width: 30,
-                    height: 30,
-                    decoration: BoxDecoration(
-                      border: Border.all(width: 4, color: Color(0xFFF0F0F0)) ,
-                      borderRadius: BorderRadius.all(Radius.circular(25)),
-                      color: Color(0xFFB4906C)),
+                  GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          checkcolorBrown =! checkcolorBrown;
+                          checkcolorWhite = false;
+                          checkcolorNude = false;
+                        });
+                      },
+                    child: Container(
+                      width: 30,
+                      height: 30,
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 4, color: checkcolorBrown ?Colors.black : Color(0xFFF0F0F0)),
+                        borderRadius: BorderRadius.all(Radius.circular(25)),
+                        color: Color(0xFFB4906C)),
+                    ),
                   ),
-                  Container(
-                    width: 30,
-                    height: 30,
-                    decoration: BoxDecoration(
-                      border: Border.all(width: 4,color: Color(0xFFF0F0F0)) ,
-                      borderRadius: BorderRadius.all(Radius.circular(25)),
-                      color: Color(0xFFE4CBAD)),
+                  GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          checkcolorNude =! checkcolorNude;
+                          checkcolorWhite = false;
+                          checkcolorBrown = false;
+                        });
+                      },
+                    child: Container(
+                      width: 30,
+                      height: 30,
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 4,color: checkcolorNude ? Colors.black : Color(0xFFF0F0F0)),
+                        borderRadius: BorderRadius.all(Radius.circular(25)),
+                        color: Color(0xFFE4CBAD)),
+                    ),
                   )
                 ],
               ),
@@ -138,29 +188,44 @@ class _ProductState extends State<Product> {
                 MyText.baseText(text: '\$ $price\0', size: 30, fontWeight: FontWeight.w600),
                 Row(
                   children: [
-                    Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(2)),
-                        color: Color(0xFFE0E0E0)  ),
-                      child: Icon(Icons.add),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _incrementCounter();
+                        });
+                      },
+                      child: Container(
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(2)),
+                          color: Color(0xFFE0E0E0)  ),
+                        child: Icon(Icons.add),
+                      ),
                     ),
                     Container(
                       width: 40,
                       height: 40,
                       alignment: Alignment.center,
-                      child: MyText.baseText(text: '01'),
+                      child: MyText.baseText(text: '$_counter'),
                     ),
-                    Container(
-                      margin: EdgeInsets.only(right: 20),
-                      width: 40,
-                      height: 40,
-                      alignment: Alignment.topCenter,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(2)),
-                        color: Color(0xFFE0E0E0)  ),
-                      child: Icon(Icons.minimize_outlined),
+
+                     GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _decreasecounter();
+                        });
+                      },
+                      child: Container(
+                        margin: EdgeInsets.only(right: 20),
+                        width: 40,
+                        height: 40,
+                        alignment: Alignment.topCenter,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(2)),
+                          color: Color(0xFFE0E0E0)  ),
+                        child: Icon(Icons.minimize_outlined),
+                      ),
                     )
                   ],
                 )
@@ -183,7 +248,14 @@ class _ProductState extends State<Product> {
               ),
             ),
 
-            MyText.baseText(text: content, color: colorGray),
+            Expanded(
+              child: ListView(
+                padding: EdgeInsets.only(bottom: 30),
+                children: [
+                  MyText.baseText(text: content, color: colorGray),
+                ],
+              ),
+            ),
 
             Row(
               children: [
@@ -191,12 +263,13 @@ class _ProductState extends State<Product> {
                   flex: 1,
                   child: TextButton(
                     onPressed: () {
-                      Navigator.push(
-                        context, MaterialPageRoute(builder: (context) => buttonBar()));
+                      setState(() {
+                        check =! check;
+                      });
                     },
-                    child: Icon(Icons.bookmark_outline, color: Color(0xFF909090),),
+                    child: Icon(Icons.bookmark_outline, color: check? Color(0xFF909090) : Colors.white,),
                     style: TextButton.styleFrom(
-                      backgroundColor: Color(0xFFE0E0E0),
+                      backgroundColor: check? Color(0xFFE0E0E0) : Colors.black,
                       padding: EdgeInsets.only(top: 15, bottom: 15),
                       shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(8))),

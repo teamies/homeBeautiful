@@ -10,12 +10,13 @@ class MyText {
       FontWeight fontWeight = FontWeight.w500,
       String color = cnf.colorBlack,
       TextAlign? textAlign,
+      String fontFamily = 'Poppins',
       TextDecoration? decoration}) {
     return Text(
       text,
       textAlign: textAlign,
       style: TextStyle(
-          fontFamily: 'Poppins',
+          fontFamily: fontFamily,
           //overflow: TextOverflow.ellipsis,
           decoration: decoration,
           fontSize: size.toDouble(),
