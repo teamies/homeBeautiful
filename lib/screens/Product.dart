@@ -6,39 +6,44 @@ import 'package:home_beautiful/components/buttonBar.dart';
 import 'package:home_beautiful/components/mytext.dart';
 import 'package:home_beautiful/core/_config.dart';
 import 'package:home_beautiful/models/product.dart';
-import 'package:home_beautiful/screens/Home.dart';
 import 'package:home_beautiful/screens/Review.dart';
 
-class Product extends StatefulWidget {
-  const Product({super.key});
+class aa extends StatelessWidget {
+  const aa({Key? key}) : super(key: key);
 
   @override
-  State<Product> createState() => _ProductState();
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
 }
 
-class _ProductState extends State<Product> {
+
+class Product extends StatelessWidget {
+  const Product({super.key, required this.pro}) ;
+  final product pro;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        child: Column(
+        child: ListView(
           children: [
-            Header(), 
-            contents(
-              title: listProduct[0].title,
-              price: listProduct[0].price,
+            Header(context),
+            contents(context,
+              title: pro.title,
+              price: pro.price,
               rate: 3.0,
               sumEvaluate: '(50 reviews)',
               content: 'Nice Furniture with good delivery. The delivery time is very fast. Then products look like exactly the picture in the app. Besides, color is also the same and quality is very good despite very cheap price'
             )
-            
+
           ],
         ),
       ),
     );
   }
 
-  Widget Header(){
+  Widget Header(BuildContext context){
     return Stack(
       children: [
         Row(
@@ -54,7 +59,7 @@ class _ProductState extends State<Product> {
                 image: DecorationImage(
                   alignment: Alignment.centerRight,
                   fit: BoxFit.cover,
-                  image: AssetImage("assets/img/lamp.png"))),
+                  image: AssetImage(pro.image))),
             ),
           ],
         ),
@@ -119,7 +124,7 @@ class _ProductState extends State<Product> {
     );
   }
 
-  Widget contents(
+  Widget contents( BuildContext context,
     {String? title, content,sumEvaluate,
     double? rate,price}){
     return Expanded(
@@ -191,8 +196,6 @@ class _ProductState extends State<Product> {
                   flex: 1,
                   child: TextButton(
                     onPressed: () {
-                      Navigator.push(
-                        context, MaterialPageRoute(builder: (context) => buttonBar()));
                     },
                     child: Icon(Icons.bookmark_outline, color: Color(0xFF909090),),
                     style: TextButton.styleFrom(

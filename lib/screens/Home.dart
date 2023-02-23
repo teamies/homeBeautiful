@@ -73,40 +73,23 @@ class _HomeState extends State<Home> {
                           mainAxisSpacing: 15.0,
                           children:
                           List.generate(listProduct.length, (index) {
-                            return Center(
-                                child: contentProduct(
-                                    img: listProduct[index].image,
-                                    lable: listProduct[index].title,
-                                    price: listProduct[index].price
-                                )
+                            return GestureDetector(
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => Product(pro: listProduct[index])));
+                              },
+                              child: Center(
+                                  child: contentProduct(
+                                      img: listProduct[index].image,
+                                      lable: listProduct[index].title,
+                                      price: listProduct[index].price
+                                  )
+                              ),
                             );
                           }
                           )
                       )
 
 
-                    // child: ListView.builder(
-                    //   // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    //   //   crossAxisCount: 2,
-                    //   //   childAspectRatio: 0.64,
-                    //   //   crossAxisSpacing: 15.0,
-                    //   //   mainAxisSpacing: 15.0,
-                    //   // ),
-                    //   itemCount: listProduct.length,
-                    //   itemBuilder: (context, index) {
-
-                    //     if(listProduct[index].type != productType){
-                    //     return Container(
-                    //       height: 150,
-                    //       child: contentProduct(
-                    //         img: listProduct[index].image,
-                    //         lable: listProduct[index].title,
-                    //         price: listProduct[index].price),
-                    //     );
-                    //     }return SizedBox(
-                    //     );
-                    //   },
-                    // ),
                   ),
                 )
               ],
@@ -303,12 +286,7 @@ class _HomeState extends State<Home> {
         String? img,
         String? lable,
         double? price}) {
-    return GestureDetector(
-      onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context) => Product()));
-      },
-      child: Container(
-        // decoration: BoxDecoration(border: Border.all()),
+    return Container(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -353,7 +331,6 @@ class _HomeState extends State<Home> {
             MyText.baseText(text: '\$ $price\0', size: 18, fontWeight: FontWeight.bold),
           ],
         ),
-      ),
     );
   }
 

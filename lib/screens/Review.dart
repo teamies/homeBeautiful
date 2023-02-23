@@ -63,7 +63,7 @@ class _ReviewState extends State<Review> {
             ),
           GestureDetector(
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=> Product()));
+              Navigator.pop(context);
             },
             child: Icon(
               Icons.chevron_left,
