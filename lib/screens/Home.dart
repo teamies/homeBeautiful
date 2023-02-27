@@ -55,11 +55,11 @@ class _HomeState extends State<Home> {
                   Expanded(
                     child: Container(
                       margin: EdgeInsets.only(top: 10),
-                        height: MediaQuery.of(context).size.height * 0.67,
+                        // height: MediaQuery.of(context).size.height * 0.67,
                         child: GridView.count(
                           padding: EdgeInsets.only(top: 10, bottom: 20),
                             crossAxisCount: 2,
-                            childAspectRatio: 0.64,
+                            childAspectRatio: 0.6,
                             crossAxisSpacing: 15.0,
                             mainAxisSpacing: 15.0,
                             children: 
@@ -131,7 +131,7 @@ class _HomeState extends State<Home> {
           ),
           Container(
             margin: EdgeInsets.only(top: 20),
-            height: 80,
+            height: 90,
             width: double.infinity,
             child: ListView(
                 scrollDirection: Axis.horizontal,
@@ -253,8 +253,8 @@ class _HomeState extends State<Home> {
       child: Column(
         children: [
           Container(
-            height: 50,
-            width: 50,
+            height: 55,
+            width: 55,
             decoration: BoxDecoration(
                 color: colorsBackground,
                 borderRadius: BorderRadius.all(Radius.circular(10))),
@@ -287,13 +287,19 @@ class _HomeState extends State<Home> {
               child: Stack(
                 alignment: AlignmentDirectional.bottomEnd,
                 children: [
-                  Center(
-                    child: Container(
+                  Container(
+                    width: MediaQuery.of(context).size.width*0.5,
+                    // decoration: BoxDecoration(
+                    //   border: Border.all(),
+                    //   borderRadius: BorderRadius.circular(25)),
+                    // child: Text('data'),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(25),
                       child: Image.asset(
                         img!,
-                        width: MediaQuery.of(context).size.width * 0.5,
-                      )
-                    ),
+                        // width: MediaQuery.of(context).size.width * 0.5,
+                      ),
+                    )
                   ),
                   GestureDetector(
                     onTap: (){

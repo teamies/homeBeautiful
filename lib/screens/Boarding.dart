@@ -10,6 +10,12 @@ import 'package:swipeable_page_route/swipeable_page_route.dart';
 
 class Boarding extends StatelessWidget {
   const Boarding({super.key});
+  static const colorizeColors = [
+  Colors.purple,
+  Colors.blue,
+  Colors.yellow,
+  Colors.red,
+];
 
   @override
   Widget build(BuildContext context) {
