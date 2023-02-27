@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:home_beautiful/components/titleBar.dart';
 import 'package:home_beautiful/models/product.dart';
@@ -5,7 +7,7 @@ import 'package:home_beautiful/screens/check_out.dart';
 import 'package:swipeable_page_route/swipeable_page_route.dart';
 
 import '../components/mytext.dart';
-import '../core/_config.dart';
+import '../models/myCart.dart';
 
 class my_cart extends StatefulWidget {
   const my_cart({Key? key}) : super(key: key);
@@ -15,13 +17,30 @@ class my_cart extends StatefulWidget {
 }
 
 class _my_cartState extends State<my_cart> {
+
+  double SumPrice =0;
+
+  void sum(){
+    setState(() {
+      SumPrice= listMyCart.fold(0, (previousValue, element) => previousValue + (element.price * element.quantity));
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    sum();
+  }
+
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
-        body: SingleChildScrollView(
-            child: SafeArea(
+        body: SafeArea(
               child: Padding(
-                padding: const EdgeInsets.all(20),
+                padding:  EdgeInsets.all(MediaQuery.of(context).size.height*0.02),
                 child: Column(
                   children: [
                       Row(
@@ -47,161 +66,188 @@ class _my_cartState extends State<my_cart> {
 
                     ),
 
-                    Container(
-                      height: MediaQuery.of(context).size.height*0.57,
-                        child: ListView.builder(
-                          itemCount: listProduct.length,
-                      itemBuilder: (context, index){
-                        final item = listProduct[index];
-                        return productFavorites(item.image, item.title, item.price);
-                      },
-                    ),
-                        ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20, bottom: 10),
-                      child: Row(
+                    Expanded(
+                        child: Column(
                           children: [
                             Expanded(
-                              child: Padding(
-                                padding: MediaQuery.of(context).viewInsets,
-                                child:const Card(
-                                  child: TextField(
-                                    decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      hintText: ' Enter your promo code'
+                              child: ListView.builder(
+                                itemCount: listMyCart.length,
+                                itemBuilder: (context, index){
+                                  final item = listMyCart[index];
+
+                                  return Padding(
+                                    padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height*0.03),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          height: 100,
+                                          child: Row(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Container(
+                                                width: 100,
+                                                height: 100,
+                                                child: ClipRRect(
+                                                    borderRadius: BorderRadius.circular(15),
+                                                    child: Align(
+                                                        alignment: Alignment.topCenter,
+                                                        child: Image.asset(item.image,width: 100, height: 100, fit: BoxFit.cover,))),
+                                              ),
+                                              Expanded(
+                                                child: Padding(
+                                                  padding: const EdgeInsets.only(left: 15, top: 4),
+                                                  child: SizedBox(
+                                                    child: Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        MyText.baseText(text: item.title),
+                                                        Expanded(
+                                                          child: Padding(
+                                                            padding: const EdgeInsets.only(top: 5),
+                                                            child: MyText.baseText(
+                                                                text: '\$ ${item.price * item.quantity}\0',
+                                                                fontWeight: FontWeight.bold),
+                                                          ),
+                                                        ),
+                                                        Row(
+                                                          children: [
+                                                            GestureDetector(
+                                                              onTap: (){
+                                                                setState(() {
+                                                                  item.quantity++;
+                                                                  sum();
+                                                                });
+                                                              },
+                                                              child: Container(
+                                                                width: 30,
+                                                                height: 30,
+                                                                decoration: BoxDecoration(
+                                                                    color: const Color(0xffE0E0E0),
+                                                                    borderRadius: BorderRadius.circular(6)
+                                                                ),
+                                                                child: Center(child: Icon(Icons.add)),
+                                                              ),
+                                                            ),
+                                                            Padding(
+                                                              padding: const EdgeInsets.only(left: 14, right: 14),
+                                                              child:  SizedBox(
+                                                                width: 30,
+                                                                height: 30,
+
+                                                                child: Center(child: MyText.baseText(text: item.quantity.toString(), size: 18, fontWeight: FontWeight.bold)),
+                                                              ),
+                                                            ),
+                                                            GestureDetector(
+                                                              onTap: (){
+                                                                setState(() {
+                                                                  if(item.quantity > 1){
+                                                                   item.quantity--;
+                                                                   sum();
+                                                                  }
+                                                                });
+                                                              },
+                                                              child: Container(
+                                                                width: 30,
+                                                                height: 30,
+                                                                decoration: BoxDecoration(
+                                                                    color: Color(0xffE0E0E0),
+                                                                    borderRadius: BorderRadius.circular(6)
+                                                                ),
+                                                                child: Center(child: Icon(Icons.remove)),
+                                                              ),
+                                                            )
+                                                          ],
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                               GestureDetector(
+                                                   onTap: (){
+                                                     setState(() {
+                                                       listMyCart.removeAt(index);
+                                                     });
+                                                   },
+                                                     child:
+                                                 Icon(Icons.cancel_outlined)),
+
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(top: 19),
+                                          child: Container(
+                                            decoration: const BoxDecoration(
+                                                border:  Border(bottom: BorderSide(color: Colors.grey))),
+                                          ),
+                                        )
+                                      ],
                                     ),
-                                  ),
-                                ),
+                                  );
+                                },
                               ),
                             ),
-                            Container(
-                              width: 45,
-                                height: 45,
-                                decoration: BoxDecoration(
-                                  color: Colors.black,
-                                  borderRadius: BorderRadius.circular(10)
-                                ),
-                                child: const Icon(Icons.arrow_forward_ios, color: Colors.white,))
+                            Padding(
+                              padding:  EdgeInsets.only(top: MediaQuery.of(context).size.height*0.01, bottom: MediaQuery.of(context).size.height*0.01),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Card(
+                                        child: TextField(
+                                          decoration: InputDecoration(
+                                              border: InputBorder.none,
+                                              hintText: 'Enter your promo code',
+                                            contentPadding: EdgeInsets.only(left: 10, right: 10)
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+
+                                  Container(
+                                      width: MediaQuery.of(context).size.height*0.07,
+                                      height: MediaQuery.of(context).size.height*0.07,
+                                      decoration: BoxDecoration(
+                                          color: Colors.black,
+                                          borderRadius: BorderRadius.circular(10)
+                                      ),
+                                      child: const Icon(Icons.arrow_forward_ios, color: Colors.white,))
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding:  EdgeInsets.only(top: MediaQuery.of(context).size.height*0.01, bottom: MediaQuery.of(context).size.height*0.01),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: MyText.baseText(text: 'Total', size: 23, fontWeight: FontWeight.bold),),
+                                  MyText.baseText(text: '\$ $SumPrice ', size: 23, fontWeight: FontWeight.bold)
+                                ],
+                              ),
+                            ),
+
+                            SizedBox(
+                              width: double.infinity,
+                              height: MediaQuery.of(context).size.height*0.08,
+                              child: ElevatedButton(
+                                  style: ButtonStyle(
+                                    backgroundColor:
+                                    MaterialStateProperty.all(Colors.black),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.push(context, SwipeablePageRoute(builder: (context) => check_out()));
+                                  },
+                                  child:const Text('Check Out')),
+                            )
                           ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20, bottom: 20),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: MyText.baseText(text: 'Total', size: 23, fontWeight: FontWeight.bold),),
-                          MyText.baseText(text: '\$ 95.00', size: 23, fontWeight: FontWeight.bold)
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      width: double.infinity,
-                      height: 50,
-                      child: ElevatedButton(
-                          style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.black),
-                          ),
-                          onPressed: () {
-                            Navigator.push(context, SwipeablePageRoute(builder: (context) => check_out()));
-                          },
-                          child:const Text('Check Out')),
-                    )
+                        ))
                   ],
                 ),
               ),
             ),
-
-        ),
     );
   }
+
+
 }
 
-Widget productFavorites(String image, String title, double price) {
-  return Padding(
-    padding: EdgeInsets.only(bottom: 19),
-    child: Column(
-      children: [
-        Container(
-          height: 100,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                width: 100,
-                height: 100,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(image),
-                    ),
-                    borderRadius: BorderRadius.circular(10)),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 15, top: 4),
-                  child: SizedBox(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        MyText.baseText(text: title, size: 14),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 5),
-                            child: MyText.baseText(
-                                text: '\$ $price\0',
-                                size: 16,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            Container(
-                              width: 30,
-                              height: 30,
-                              decoration: BoxDecoration(
-                                color: const Color(0xffE0E0E0),
-                                borderRadius: BorderRadius.circular(6)
-                              ),
-                              child: Center(child: Icon(Icons.add)),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 14, right: 14),
-                              child:  SizedBox(
-                                width: 30,
-                                height: 30,
-
-                                child: Center(child: MyText.baseText(text: '01', size: 18, fontWeight: FontWeight.bold)),
-                              ),
-                            ),
-                            Container(
-                              width: 30,
-                              height: 30,
-                              decoration: BoxDecoration(
-                                  color: Color(0xffE0E0E0),
-                                  borderRadius: BorderRadius.circular(6)
-                              ),
-                              child: Center(child: Icon(Icons.remove)),
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-                 const Icon(Icons.cancel_outlined)
-            ],
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 19),
-          child: Container(
-            decoration: const BoxDecoration(
-                border:  Border(bottom: BorderSide(color: Colors.grey))),
-          ),
-        )
-      ],
-    ),
-  );
-}

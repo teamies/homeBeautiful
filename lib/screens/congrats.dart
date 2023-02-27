@@ -16,13 +16,13 @@ class _congratsState extends State<congrats> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: EdgeInsets.all(MediaQuery.of(context).size.height*0.02),
           child: Column(
             children: [
               Expanded(
                 flex: 3,
                     child: Padding(
-                      padding:  EdgeInsets.only(top: MediaQuery.of(context).size.height*0.1),
+                      padding:  EdgeInsets.only(top: MediaQuery.of(context).size.height*0.01),
                       child: Column(
                         children: [
                           MyText.baseText(text: 'SUCCESS!',size: 30 ,fontWeight: FontWeight.bold),
@@ -38,7 +38,7 @@ class _congratsState extends State<congrats> {
               Expanded(
                   flex: 1,
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 20),
+                    padding:  EdgeInsets.only(top: MediaQuery.of(context).size.height*0.01),
                     child: Column(
                       children: [
                          Container(
@@ -53,7 +53,7 @@ class _congratsState extends State<congrats> {
                               ),
                             ),
                         Padding(
-                          padding: const EdgeInsets.only(top: 20),
+                          padding:  EdgeInsets.only(top: 20),
                           child: Container(
                             width: double.infinity,
                             height: MediaQuery.of(context).size.height*0.08,

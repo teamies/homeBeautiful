@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:home_beautiful/core/tocolor.dart';
 import 'package:home_beautiful/core/_config.dart' as cnf;
+import 'package:auto_size_text/auto_size_text.dart';
+
 
 class MyText {
   
@@ -10,17 +12,22 @@ class MyText {
       FontWeight fontWeight = FontWeight.w500,
       String color = cnf.colorBlack,
       TextAlign? textAlign,
-      TextDecoration? decoration}) {
-    return Text(
+      String fontFamily = 'Poppins',
+      TextDecoration? decoration,
+      int? maxLine}) {
+    return AutoSizeText(
       text,
       textAlign: textAlign,
+      maxLines: maxLine,
       style: TextStyle(
-          fontFamily: 'Poppins',
+          fontFamily: fontFamily,
           //overflow: TextOverflow.ellipsis,
           decoration: decoration,
           fontSize: size.toDouble(),
           fontWeight: fontWeight,
-          color: color.toColor()),
+          color: color.toColor(),
+
+      ),
     );
   }
   static TextStyle textStyle(

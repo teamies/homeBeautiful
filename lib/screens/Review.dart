@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:home_beautiful/components/mytext.dart';
 import 'package:home_beautiful/core/_config.dart';
 import 'package:home_beautiful/models/product.dart';
+import 'package:home_beautiful/models/review.dart';
 import 'package:home_beautiful/screens/Product.dart';
 
 class Review extends StatefulWidget {
@@ -24,7 +25,7 @@ class _ReviewState extends State<Review> {
             children: [
               appBar(), 
               Header(), 
-              Expanded(child: Contents()),
+              Expanded(child: comments()),
               Container(
                 width: double.infinity,
                 child: TextButton(
@@ -81,16 +82,19 @@ class _ReviewState extends State<Review> {
       height: 140,
       child: Row(
         children: [
-          Container(
-            margin: EdgeInsets.only(right: 20),
-            width: 100,
-            height: 100,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                 alignment: Alignment.center,
-                  fit: BoxFit.cover,
-                  image: AssetImage(listProduct[0].image)
-               )
+          Hero(
+            tag: 'heroImg',
+            child: Container(
+              margin: EdgeInsets.only(right: 20),
+              width: 100,
+              height: 100,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                   alignment: Alignment.center,
+                    fit: BoxFit.cover,
+                    image: AssetImage(listProduct[0].image)
+                 )
+              ),
             ),
           ),
           Column(
@@ -111,31 +115,29 @@ class _ReviewState extends State<Review> {
     );
   }
 
-  Widget Contents(){
+  Widget comments(){
     return Container(
-      child: ListView(
-        children: [
-          fromContent(
-            title: 'Bruno Fernandes',
-            date: '21/01/2023',
-            content: 'Nice Furniture with good delivery. The delivery time is very fast. Then products look like exactly the picture in the app. Besides, color is also the same and quality is very good despite very cheap price',
-            img: listProduct[1].image
-          ),
-          fromContent(
-            title: 'Bruno Fernandes',
-            date: '21/01/2023',
-            content: 'Nice Furniture with good delivery. The delivery time is very fast. Then products look like exactly the picture in the app. Besides, color is also the same and quality is very good despite very cheap price, color is also the same and quality is very good despite very cheap price',
-            img: listProduct[1].image
-          )
-        ]),
+      child: ListView.builder(
+        itemCount: listReview.length,
+          itemBuilder: (context, index){
+          final item = listReview[index];
+            return fromcomment(
+            title: item.title,
+            date: item.date,
+            comment: item.comment,
+            img: item.image
+          );
+        }
+      )
     );
   }
 
-  Widget fromContent({
-    String? title ,content,date,img,
+  Widget fromcomment({
+    String? title ,comment,date,img,
     // Icon? icon,
     }){
     return Container(
+      margin: EdgeInsets.only(bottom: 30),
       child: Stack(
         alignment: Alignment.topCenter,
         children: [
@@ -166,7 +168,7 @@ class _ReviewState extends State<Review> {
                     ],
                   ),
                 ),
-                MyText.baseText(text: content!, color: colorGray)
+                MyText.baseText(text: comment!, color: colorGray)
               ],
             ),
           ),

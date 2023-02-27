@@ -3,8 +3,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:home_beautiful/components/buttonBar.dart';
 import 'package:home_beautiful/components/mytext.dart';
 import 'package:home_beautiful/core/_config.dart';
-import 'package:home_beautiful/screens/SingUp.dart';
-
+import 'package:home_beautiful/screens/Home.dart';
+import 'package:home_beautiful/screens/SignUp.dart';
+import 'package:swipeable_page_route/swipeable_page_route.dart';
 
 class LogIn extends StatefulWidget {
   const LogIn({super.key});
@@ -20,7 +21,7 @@ class _LogInState extends State<LogIn> {
       body: SingleChildScrollView(
         child: Container(
           width: MediaQuery.of(context).size.width,
-          // padding: EdgeInsets.all(50),
+          padding: EdgeInsets.all(20),
           child: Column(
             children: [Header(), formLogIn(context)],
           ),
@@ -42,7 +43,6 @@ class _LogInState extends State<LogIn> {
 
   Widget formLogIn(BuildContext context) {
     return Card(
-      margin: EdgeInsets.all(20),
       child: Container(
         // height: double.infinity*2/3,
         height: MediaQuery.of(context).size.height * 1 / 2,
@@ -70,12 +70,12 @@ class _LogInState extends State<LogIn> {
               ),
             ),
             GestureDetector(
-              child: MyText.baseText(text: 'Sign Up', color: colorGray),
-              onTap: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => SignUp()));
-              },
-            )
+                child: MyText.baseText(text: 'Sign Up', color: colorGray),
+                onTap: () {
+                  Navigator.push(
+                      context, SwipeablePageRoute(builder: (context) => SignUp()));
+                },
+              ),
           ],
         ),
       ),

@@ -18,54 +18,59 @@ class _profileState extends State<profile> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.all(20),
+          padding: EdgeInsets.all(MediaQuery.of(context).size.height*0.02),
           child: Column(
             children: [
               titleBar('Profile'),
+
+               Row(
+                      children: [
+                        ConstrainedBox(
+                          constraints: BoxConstraints(maxHeight: 80, minHeight: 50),
+                          child: CircleAvatar(
+                            radius: 50,
+                            backgroundImage: AssetImage('assets/img/img.png'),
+                          ),
+                        ),
+
+                        Padding(
+                            padding: EdgeInsets.only(left: 20),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              MyText.baseText(text: 'Kristin Watson', fontWeight: FontWeight.bold),
+                              MyText.baseText(text: 'bruno203@gmail.com', size: 14),
+                            ],
+                          ),
+                        )
+
+                      ],
+
+                  ),
+
+
+
               Expanded(
-                child: Row(
-                    children: [
-                      SizedBox(
-                        width: 90,
-                        child: CircleAvatar(
-                          radius: 50,
-                          backgroundImage: AssetImage('assets/img/img.png'),
-                        ),
+                child: Container(
+                      padding:  EdgeInsets.only(top: MediaQuery.of(context).size.height*0.01),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          list('My orders', 'Already have orders 10'),
+                          list('Shipping Addresses','03 Adresses'),
+                          list('Payment Method', 'You have 2 cards'),
+                          GestureDetector(
+                            onTap: (){
+                              Navigator.push(context, SwipeablePageRoute(builder: (context) => my_reviews()) );
+                            },
+
+                                  child: list('My reviews', 'Reviews for 5 items')),
+                          list('Setting', 'Notification, Password, FAQ, Contact')
+                        ],
                       ),
-
-                      Padding(
-                          padding: EdgeInsets.only(left: 20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            MyText.baseText(text: 'Kristin Watson', fontWeight: FontWeight.bold),
-                            MyText.baseText(text: 'bruno203@gmail.com', size: 14),
-                          ],
-                        ),
-                      )
-
-                    ],
-
-                ),
+                    ),
               ),
 
-               Container(
-                  padding: const EdgeInsets.only(top: 15),
-                  child: Column(
-                    children: [
-                      list('My orders', 'Already have orders 10'),
-                      list('Shipping Addresses','03 Adresses'),
-                      list('Payment Method', 'You have 2 cards'),
-                      GestureDetector(
-                        onTap: (){
-                          Navigator.push(context, SwipeablePageRoute(builder: (context) => my_reviews()) );
-                        },
-
-                              child: list('My reviews', 'Reviews for 5 items')),
-                      list('Setting', 'Notification, Password, FAQ, Contact')
-                    ],
-                  ),
-                ),
 
             ],
           ),
@@ -75,21 +80,21 @@ class _profileState extends State<profile> {
   }
   Widget list(String title, String text){
     return Container(
-      height: 98,
-      padding: const EdgeInsets.only(top: 15),
+      height: MediaQuery.of(context).size.height*0.12,
       child: Card(
         child: Padding(
-          padding:  EdgeInsets.all(10),
+          padding:  EdgeInsets.all(MediaQuery.of(context).size.height*0.01),
           child: Row(
             children: [
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     MyText.baseText(text: title, fontWeight: FontWeight.bold),
                     Padding(
-                      padding: const EdgeInsets.only(top: 5),
-                      child: MyText.baseText(text: text, size: 14, color: colorGray),
+                      padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.001),
+                      child: MyText.baseText(text: text,size: 14, color: colorGray),
                     ),
                   ],
                 ),
