@@ -62,7 +62,7 @@ class _congratsState extends State<congrats> {
                                 backgroundColor: MaterialStateProperty.all(Colors.black),
                               ),
                               onPressed: (){
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => buttonBar()));
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => buttonBar(selectedIndex: 0,)));
                               },
                               child: MyText.baseText(text: 'Back to home', color: colorWhite),
                             ),

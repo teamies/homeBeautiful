@@ -9,6 +9,7 @@ import 'package:home_beautiful/core/_config.dart';
 import 'package:home_beautiful/models/product.dart';
 import 'package:home_beautiful/screens/Home.dart';
 import 'package:home_beautiful/screens/Review.dart';
+import 'package:home_beautiful/screens/my_cart.dart';
 import 'package:home_beautiful/screens/product_favorites.dart';
 
 
@@ -111,7 +112,7 @@ class _ProductState extends State<Product> {
                 child:GestureDetector(
                   child: Icon(Icons.chevron_left, size: 30),
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => buttonBar()));
+                    Navigator.pop(context);
                   },
                 ),
               ),
@@ -301,8 +302,8 @@ class _ProductState extends State<Product> {
                   flex: 5,
                   child: TextButton(
                     onPressed: () {
-                      // Navigator.push(
-                      //   context, MaterialPageRoute(builder: (context) => product_favorites()));
+                      Navigator.push(
+                        context, MaterialPageRoute(builder: (context) => my_cart()));
                     },
                     child: MyText.baseText(text: 'Add to cart', color: colorWhite),
                     style: TextButton.styleFrom(

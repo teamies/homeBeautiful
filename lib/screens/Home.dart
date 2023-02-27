@@ -59,7 +59,7 @@ class _HomeState extends State<Home> {
                         child: GridView.count(
                           padding: EdgeInsets.only(top: 10, bottom: 20),
                             crossAxisCount: 2,
-                            childAspectRatio: 0.6,
+                            childAspectRatio: 0.58,
                             crossAxisSpacing: 15.0,
                             mainAxisSpacing: 15.0,
                             children: 
@@ -294,7 +294,7 @@ class _HomeState extends State<Home> {
                     //   borderRadius: BorderRadius.circular(25)),
                     // child: Text('data'),
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(25),
+                      borderRadius: BorderRadius.circular(10),
                       child: Image.asset(
                         img!,
                         // width: MediaQuery.of(context).size.width * 0.5,

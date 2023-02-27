@@ -91,16 +91,17 @@ class _SignUpState extends State<SignUp> {
                 width: double.infinity,
                 child: TextButton(
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        SwipeablePageRoute(
-                            transitionBuilder: (context,
-                                    animation,
-                                    secondaryAnimation,
-                                    isSwipeGesture,
-                                    child) =>
-                                LogIn(),
-                            builder: (context) => LogIn()));
+                    Navigator.pushNamedAndRemoveUntil(context, "/logIn", (r) => false);
+                    // Navigator.push(
+                    //     context,
+                    //     SwipeablePageRoute(
+                    //         transitionBuilder: (context,
+                    //                 animation,
+                    //                 secondaryAnimation,
+                    //                 isSwipeGesture,
+                    //                 child) =>
+                    //             LogIn(),
+                    //         builder: (context) => LogIn()));
                   },
                   child: MyText.baseText(text: 'Sign up', color: colorWhite),
                   style: TextButton.styleFrom(

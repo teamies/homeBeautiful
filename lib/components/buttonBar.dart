@@ -6,15 +6,18 @@ import '../screens/product_favorites.dart';
 import '../screens/profile.dart';
 
 class buttonBar extends StatefulWidget {
-  const buttonBar({super.key});
+  int selectedIndex = 0;
+   buttonBar({super.key, required this.selectedIndex});
 
   @override
   State<buttonBar> createState() => _buttonBarState();
 }
 
 class _buttonBarState extends State<buttonBar> {
-  int _selectedIndex = 0;
+  
   List tap = [Home(), product_favorites(), notification(), profile()];
+  
+  get z => null;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +33,7 @@ class _buttonBarState extends State<buttonBar> {
             child: child,
           );
         },
-        child: tap[_selectedIndex],
+        child: tap[this.widget.selectedIndex],
       ) ,
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
@@ -64,11 +67,11 @@ class _buttonBarState extends State<buttonBar> {
             // backgroundColor: Colors.black
           )
         ],
-        currentIndex: _selectedIndex,
+        currentIndex: this.widget.selectedIndex,
         selectedItemColor: Colors.amber[800],
         onTap: (value) {
           setState(() {
-            _selectedIndex = value;
+            this.widget.selectedIndex = value;
           });
         },
       ),

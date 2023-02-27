@@ -41,11 +41,7 @@ class Boarding extends StatelessWidget {
             ),
             Expanded(
               child: DefaultTextStyle(
-                style: const TextStyle(
-                  color: Colors.black45,
-                  fontSize: 18.0,
-                  fontFamily: 'Poppins',
-                ),
+                style: MyText.textStyle(color: colorGray),
                 child: AnimatedTextKit(
                   repeatForever: true,
                   animatedTexts: [
@@ -72,12 +68,13 @@ class Boarding extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               child: TextButton(
                 onPressed: (() {
-                  Navigator.push(
-                      context,
-                      PageTransition(
-                          duration: Duration(milliseconds: 650),
-                          type: PageTransitionType.rightToLeft,
-                          child: SignUp()));
+                  Navigator.pushNamedAndRemoveUntil(context, "/signUp", (r) => false);
+                  // Navigator.push(
+                  //     context,
+                  //     PageTransition(
+                  //         duration: Duration(milliseconds: 650),
+                  //         type: PageTransitionType.rightToLeft,
+                  //         child: SignUp()));
                 }),
                 child: MyText.baseText(text: 'Get Started', color: colorWhite),
                 style: TextButton.styleFrom(

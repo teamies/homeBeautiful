@@ -91,8 +91,9 @@ class _LogInState extends State<LogIn> {
               width: double.infinity,
               child: TextButton(
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => buttonBar()));
+                  Navigator.pushNamedAndRemoveUntil(context, "/buttonBar", (r) => false);
+                  // Navigator.push(context,
+                  //     MaterialPageRoute(builder: (context) => buttonBar(selectedIndex: 0,)));
                 },
                 child: MyText.baseText(text: 'Log in', color: colorWhite),
                 style: TextButton.styleFrom(
