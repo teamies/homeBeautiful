@@ -19,25 +19,48 @@ class _SignUpState extends State<SignUp> {
       body: SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height,
-          padding: EdgeInsets.all(20),
+          padding: EdgeInsets.only(top: 20, bottom: 10, left: 20, right: 20),
           width: MediaQuery.of(context).size.width,
           child: Column(
-            children: [Header(), formLogIn(context)],
+            children: [Header(), formLogIn(context), line()],
           ),
         ),
       ),
     );
   }
 
-  Widget Header() {
-    return Column(crossAxisAlignment: CrossAxisAlignment.center, 
-    children: [
+ Widget Header() {
+    return Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+      Row(
+        children: [
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(border: Border.all(color: Colors.grey) ),
+            ),
+          ),
+          Container(
+            // decoration: BoxDecoration(border: Border.all()),
+            margin: EdgeInsets.only(top: 30, bottom: 30, left: 20, right: 20),
+            width: 50,
+            height: 50,
+              child: CircleAvatar(
+                backgroundImage: AssetImage('assets/img/MinimalStand.png'),
+              )
+            ),
+            Expanded(
+            child: Container(
+              decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
+            ),
+          ),
+        ],
+      ),
+      
       Container(
-        padding: EdgeInsets.only(top: 50, bottom: 50),
-        child: Image(image: AssetImage("assets/img/Logo.png"))),
-      MyText.baseText(text: 'Hello!', fontWeight: FontWeight.w400, size: 30),
-      MyText.baseText(
-        text: 'WELCOME BACK', size: 40, fontWeight: FontWeight.w700)
+        margin: EdgeInsets.only(bottom: 30),
+        width: MediaQuery.of(context).size.width/2,
+        child: MyText.baseText(
+            text: 'WELCOME', size: 40,maxLine: 1 ,fontWeight: FontWeight.w700),
+      )
     ]);
   }
 
@@ -132,6 +155,14 @@ class _SignUpState extends State<SignUp> {
           Expanded(flex: 1, child: FaIcon(FontAwesomeIcons.chevronDown, size: 18,))
         ],
       ),
+    );
+  }
+
+  Widget line(){
+    return Container(
+      margin: EdgeInsets.only(top: 30),
+      width: MediaQuery.of(context).size.width*2/5,
+      decoration: BoxDecoration(border: Border.all(width: 2)),
     );
   }
 }

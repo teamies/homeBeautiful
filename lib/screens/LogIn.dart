@@ -18,12 +18,14 @@ class _LogInState extends State<LogIn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          padding: EdgeInsets.all(20),
-          child: Column(
-            children: [Header(), formLogIn(context)],
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.all(20),
+            child: Column(
+              children: [Header(), formLogIn(context)],
+            ),
           ),
         ),
       ),
@@ -32,9 +34,29 @@ class _LogInState extends State<LogIn> {
 
   Widget Header() {
     return Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-      Container(
-          padding: EdgeInsets.only(top: 50, bottom: 50),
-          child: Image(image: AssetImage("assets/img/Logo.png"))),
+      Row(
+        children: [
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(border: Border.all(color: Colors.grey) ),
+            ),
+          ),
+          Container(
+            // decoration: BoxDecoration(border: Border.all()),
+            margin: EdgeInsets.only(top: 30, bottom: 30, left: 20, right: 20),
+            width: 50,
+            height: 50,
+              child: CircleAvatar(
+                backgroundImage: AssetImage('assets/img/MinimalStand.png'),
+              )
+            ),
+            Expanded(
+            child: Container(
+              decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
+            ),
+          ),
+        ],
+      ),
       MyText.baseText(text: 'Hello!', fontWeight: FontWeight.w400, size: 30),
       MyText.baseText(
           text: 'WELCOME BACK', size: 40, fontWeight: FontWeight.w700)
@@ -50,8 +72,8 @@ class _LogInState extends State<LogIn> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            formTextField(labelText: 'Name', obscureText: false),
-            formTextField(labelText: 'Email', obscureText: true),
+            formTextField(labelText: 'Email', obscureText: false),
+            formTextField(labelText: 'Password', obscureText: true),
             MyText.baseText(text: 'Forgot Password', color: colorGray),
             Container(
               width: double.infinity,
