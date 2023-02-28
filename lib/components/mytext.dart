@@ -20,13 +20,12 @@ class MyText {
       textAlign: textAlign,
       maxLines: maxLine,
       style: TextStyle(
-          fontFamily: fontFamily,
-          //overflow: TextOverflow.ellipsis,
-          decoration: decoration,
-          fontSize: size.toDouble(),
-          fontWeight: fontWeight,
-          color: color.toColor(),
-
+        fontFamily: fontFamily,
+        //overflow: TextOverflow.ellipsis,
+        decoration: decoration,
+        fontSize: size.toDouble(),
+        fontWeight: fontWeight,
+        color: color.toColor(),
       ),
     );
   }
