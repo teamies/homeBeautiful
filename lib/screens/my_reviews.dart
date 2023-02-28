@@ -17,7 +17,7 @@ class _my_reviewsState extends State<my_reviews> {
     return Scaffold(
       body: SafeArea(
           child: Padding(
-            padding: EdgeInsets.all(20),
+            padding: EdgeInsets.all(MediaQuery.of(context).size.height*0.02),
             child: Column(
               children: [
                 Row(

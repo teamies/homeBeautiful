@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:home_beautiful/components/buttonBar.dart';
 import 'package:home_beautiful/components/lineButton.dart';
 import 'package:home_beautiful/components/mytext.dart';
@@ -41,7 +39,7 @@ class _ProductState extends State<Product> {
 
   @override
   Widget build(BuildContext context) {
-  
+
     return Scaffold(
       body: Container(
         child: Column(
@@ -65,7 +63,7 @@ class _ProductState extends State<Product> {
               padding: const EdgeInsets.only(bottom: 10),
               child: lineButton(context),
             )
-            
+
           ],
         ),
       ),
@@ -87,11 +85,11 @@ class _ProductState extends State<Product> {
                 alignment: Alignment.bottomRight,
                 decoration: BoxDecoration(
                   // border: Border.all(),
-                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(50)),
-                  image: DecorationImage(
-                    alignment: Alignment.centerRight,
-                    fit: BoxFit.cover,
-                    image: AssetImage(this.widget.products.image))),
+                    borderRadius: BorderRadius.only(bottomLeft: Radius.circular(50)),
+                    image: DecorationImage(
+                        alignment: Alignment.centerRight,
+                        fit: BoxFit.cover,
+                        image: AssetImage(this.widget.products.image))),
               ),
             ),
           ],
@@ -294,7 +292,7 @@ class _ProductState extends State<Product> {
                     ),
                   ),
                 ),
-                
+
                 SizedBox(
                   width: 15,
                 ),

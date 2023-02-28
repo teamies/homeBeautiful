@@ -2,6 +2,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:home_beautiful/core/tocolor.dart';
 import 'package:home_beautiful/core/_config.dart' as cnf;
+import 'package:auto_size_text/auto_size_text.dart';
+
 
 class MyText {
   static Widget baseText(

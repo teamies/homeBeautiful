@@ -11,11 +11,12 @@ import 'package:swipeable_page_route/swipeable_page_route.dart';
 class Boarding extends StatelessWidget {
   const Boarding({super.key});
   static const colorizeColors = [
-  Colors.purple,
-  Colors.blue,
-  Colors.yellow,
-  Colors.red,
-];
+    Colors.white,
+    Colors.blue,
+    Colors.purple,
+    Colors.yellow,
+    Colors.red,
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +36,7 @@ class Boarding extends StatelessWidget {
                   text: 'MAKE YOUR HOME BEAUTIFUL',
                   maxLine: 2,
                   color: colorLightBlack,
-                  size:  42,
+                  size: 42,
                   // fontWeight: FontWeight.w100,
                   fontFamily: 'PoppinsBold'),
             ),
@@ -68,7 +69,8 @@ class Boarding extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               child: TextButton(
                 onPressed: (() {
-                  Navigator.pushNamedAndRemoveUntil(context, "/signUp", (r) => false);
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, "/signUp", (r) => false);
                   // Navigator.push(
                   //     context,
                   //     PageTransition(
@@ -76,10 +78,23 @@ class Boarding extends StatelessWidget {
                   //         type: PageTransitionType.rightToLeft,
                   //         child: SignUp()));
                 }),
-                child: MyText.baseText(text: 'Get Started', color: colorWhite),
                 style: TextButton.styleFrom(
                     backgroundColor: Color(0xff242424),
                     padding: EdgeInsets.only(top: 15, bottom: 15)),
+                child: AnimatedTextKit(
+                  repeatForever: true,
+                  animatedTexts: [
+                    ColorizeAnimatedText(
+                      'Get Started',
+                      textStyle: MyText.textStyle(),
+                      colors: colorizeColors,
+                    ),
+                  ],
+                  isRepeatingAnimation: true,
+                  onTap: () {
+                    print("Tap Event");
+                  },
+                ),
               ),
             ),
           ],

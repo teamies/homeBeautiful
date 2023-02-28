@@ -16,7 +16,7 @@ class _notificationState extends State<notification> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: EdgeInsets.all(MediaQuery.of(context).size.height*0.02),
           child: Column(
             children: [
               titleBar('Notification'),
@@ -47,17 +47,21 @@ class _notificationState extends State<notification> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          height: 100,
+        ConstrainedBox(
+          constraints: BoxConstraints(maxHeight: 100, minHeight: 80),
           child: Row(
             children: [
-              Container(
-                width: 100,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(image),
-                    ),
-                    borderRadius: BorderRadius.circular(10)),
+              Expanded(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(maxWidth: 100,minWidth: 80),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(image),
+                        ),
+                        borderRadius: BorderRadius.circular(10)),
+                  ),
+                ),
               ),
               Padding(
                   padding: const EdgeInsets.only(left: 16),

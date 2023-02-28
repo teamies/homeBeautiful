@@ -29,3 +29,4 @@ List<product> listProduct = [
   product('assets/img/CoffeeChair.png', 'Coffee Chair','Chair',25,'Nice Furniture with good delivery. The delivery time is very fast. Then products look like exactly the picture in the app. Besides, color is also the same and quality is very good despite very cheap price'),
   product('assets/img/CoffeeChair.png', 'Coffee Chair','Chair',25,'Nice Furniture with good delivery. The delivery time is very fast. Then products look like exactly the picture in the app. Besides, color is also the same and quality is very good despite very cheap price'),
 ];
+
