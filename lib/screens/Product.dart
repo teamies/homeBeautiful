@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:home_beautiful/components/buttonBar.dart';
+import 'package:home_beautiful/components/lineButton.dart';
 import 'package:home_beautiful/components/mytext.dart';
 import 'package:home_beautiful/core/_config.dart';
 import 'package:home_beautiful/models/product.dart';
 import 'package:home_beautiful/screens/Home.dart';
 import 'package:home_beautiful/screens/Review.dart';
+import 'package:home_beautiful/screens/my_cart.dart';
+import 'package:home_beautiful/screens/product_favorites.dart';
 
 
 class Product extends StatefulWidget {
@@ -43,13 +46,24 @@ class _ProductState extends State<Product> {
       body: Container(
         child: Column(
           children: [
-            Header(),
-            contents(
-                title: this.widget.products.title,
-                price: this.widget.products.price,
-                rate: 3.0,
-                sumEvaluate: '(50 reviews)',
-                content: this.widget.products.infPrp
+            Expanded(
+              child: ListView(
+                padding: EdgeInsets.all(0),
+                children: [
+                  Header(),
+                  contents( 
+                    title: this.widget.products.title,
+                    price: this.widget.products.price,
+                    rate: 3.0,
+                    sumEvaluate: '(50 reviews)',
+                    content: this.widget.products.infPrp
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: lineButton(context),
             )
 
           ],
@@ -60,6 +74,7 @@ class _ProductState extends State<Product> {
 
   Widget Header(){
     return Stack(
+      // alignment: Alignment.centerLeft,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -82,98 +97,101 @@ class _ProductState extends State<Product> {
           ],
         ),
 
-        Column(
-          children: [
-            Container(
-              height: 35,
-              width: 35,
-              margin: EdgeInsets.only(top: 50, left: 30),
-              decoration: BoxDecoration(
+        Container(
+          margin: EdgeInsets.only(left: (MediaQuery.of(context).size.width*1/9)-25),
+          // decoration: BoxDecoration(border: Border.all()),
+          child: Column(
+            children: [
+              Container(
+                height: 35,
+                width: 35,
+                margin: EdgeInsets.only(top: 40,),
+                decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(5)),
                   color: Colors.white),
-              child:GestureDetector(
-                child: Icon(Icons.chevron_left, size: 30),
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => buttonBar()));
-                },
+                child:GestureDetector(
+                  child: Icon(Icons.chevron_left, size: 30),
+                  onTap: (){
+                    Navigator.pop(context);
+                  },
+                ),
               ),
-            ),
 
-            Container(
-              height: 150,
-              width: 50,
-              margin: EdgeInsets.only(top: 50, left: 30),
-              decoration: BoxDecoration(
+              Container(
+                height: 150,
+                width: 50,
+                margin: EdgeInsets.only(top: 50,),
+                  decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(30)),
                   color: Color(0xFFFFFFFF)),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        checkcolorWhite =! checkcolorWhite;
-                        checkcolorBrown = false;
-                        checkcolorNude = false;
-                      });
-                    },
-                    child: Container(
-                      width: 30,
-                      height: 30,
-                      decoration: BoxDecoration(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            checkcolorWhite =! checkcolorWhite;
+                            checkcolorBrown = false;
+                            checkcolorNude = false;
+                          });
+                        },
+                      child: Container(
+                        width: 30,
+                        height: 30,
+                        decoration: BoxDecoration(
                           border: Border.all(width: 4,color: checkcolorWhite ? Colors.black : Color(0xFFF0F0F0)),
                           borderRadius: BorderRadius.all(Radius.circular(25)),
                           color: Color(0xFFFFFFFF)),
+                      ),
                     ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        checkcolorBrown =! checkcolorBrown;
-                        checkcolorWhite = false;
-                        checkcolorNude = false;
-                      });
-                    },
-                    child: Container(
-                      width: 30,
-                      height: 30,
-                      decoration: BoxDecoration(
+                    GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            checkcolorBrown =! checkcolorBrown;
+                            checkcolorWhite = false;
+                            checkcolorNude = false;
+                          });
+                        },
+                      child: Container(
+                        width: 30,
+                        height: 30,
+                        decoration: BoxDecoration(
                           border: Border.all(width: 4, color: checkcolorBrown ?Colors.black : Color(0xFFF0F0F0)),
                           borderRadius: BorderRadius.all(Radius.circular(25)),
                           color: Color(0xFFB4906C)),
+                      ),
                     ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        checkcolorNude =! checkcolorNude;
-                        checkcolorWhite = false;
-                        checkcolorBrown = false;
-                      });
-                    },
-                    child: Container(
-                      width: 30,
-                      height: 30,
-                      decoration: BoxDecoration(
+                    GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            checkcolorNude =! checkcolorNude;
+                            checkcolorWhite = false;
+                            checkcolorBrown = false;
+                          });
+                        },
+                      child: Container(
+                        width: 30,
+                        height: 30,
+                        decoration: BoxDecoration(
                           border: Border.all(width: 4,color: checkcolorNude ? Colors.black : Color(0xFFF0F0F0)),
                           borderRadius: BorderRadius.all(Radius.circular(25)),
                           color: Color(0xFFE4CBAD)),
-                    ),
-                  )
-                ],
-              ),
-            )
-          ],
+                      ),
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ],
     );
   }
 
   Widget contents(
-      {String? title, content,sumEvaluate,
-        double? rate,price}){
-    return Expanded(
-      child: Container(
+    {String? title, content,sumEvaluate,
+    double? rate,price}){
+    return  Container(
         // decoration: BoxDecoration(border: Border.all()),
         padding: EdgeInsets.all(20),
         child: Column(
@@ -182,54 +200,57 @@ class _ProductState extends State<Product> {
           children: [
             MyText.baseText(text: title!, size: 28, fontWeight: FontWeight.w400),
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                MyText.baseText(text: '\$ $price\0', size: 30, fontWeight: FontWeight.w600),
-                Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          _incrementCounter();
-                        });
-                      },
-                      child: Container(
-                        width: 40,
-                        height: 40,
-                        decoration: BoxDecoration(
+            Padding(
+              padding: const EdgeInsets.only(top: 10, bottom: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  MyText.baseText(text: '\$ $price\0', size: 30, fontWeight: FontWeight.w600),
+                  Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _incrementCounter();
+                          });
+                        },
+                        child: Container(
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(2)),
                             color: Color(0xFFE0E0E0)  ),
-                        child: Icon(Icons.add),
+                          child: Icon(Icons.add),
+                        ),
                       ),
-                    ),
-                    Container(
-                      width: 40,
-                      height: 40,
-                      alignment: Alignment.center,
-                      child: MyText.baseText(text: '$_counter'),
-                    ),
+                      Container(
+                        width: 40,
+                        height: 40,
+                        alignment: Alignment.center,
+                        child: MyText.baseText(text: '$_counter'),
+                      ),
 
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          _decreasecounter();
-                        });
-                      },
-                      child: Container(
-                        margin: EdgeInsets.only(right: 20),
-                        width: 40,
-                        height: 40,
-                        alignment: Alignment.topCenter,
-                        decoration: BoxDecoration(
+                       GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _decreasecounter();
+                          });
+                        },
+                        child: Container(
+                          margin: EdgeInsets.only(right: 20),
+                          width: 40,
+                          height: 40,
+                          alignment: Alignment.topCenter,
+                          decoration: BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(2)),
                             color: Color(0xFFE0E0E0)  ),
-                        child: Icon(Icons.minimize_outlined),
-                      ),
-                    )
-                  ],
-                )
-              ],
+                          child: Icon(Icons.minimize_outlined),
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              ),
             ),
 
             GestureDetector(
@@ -248,13 +269,10 @@ class _ProductState extends State<Product> {
               ),
             ),
 
-            Expanded(
-              child: ListView(
-                padding: EdgeInsets.only(bottom: 30),
-                children: [
-                  MyText.baseText(text: content, color: colorGray),
-                ],
-              ),
+            Container(
+              padding: EdgeInsets.only(top: 10,bottom: 30),
+              child: MyText.baseText(text: content, color: colorGray),
+                  
             ),
 
             Row(
@@ -284,8 +302,8 @@ class _ProductState extends State<Product> {
                   flex: 5,
                   child: TextButton(
                     onPressed: () {
-                      // Navigator.push(
-                      //   context, MaterialPageRoute(builder: (context) => buttonBar()));
+                      Navigator.push(
+                        context, MaterialPageRoute(builder: (context) => my_cart()));
                     },
                     child: MyText.baseText(text: 'Add to cart', color: colorWhite),
                     style: TextButton.styleFrom(
@@ -300,7 +318,6 @@ class _ProductState extends State<Product> {
             )
           ],
         ),
-      ),
     );
   }
 }

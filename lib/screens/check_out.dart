@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:home_beautiful/components/titleBar.dart';
 import 'package:home_beautiful/screens/congrats.dart';
+import 'package:home_beautiful/screens/my_cart.dart';
 import 'package:swipeable_page_route/swipeable_page_route.dart';
 
 import '../components/mytext.dart';
 import '../core/_config.dart';
 
 class check_out extends StatefulWidget {
-  const check_out({Key? key}) : super(key: key);
-
+  const check_out({super.key, required this.SumPrice});
+  final double SumPrice;
   @override
   State<check_out> createState() => _check_outState();
 }
 
 class _check_outState extends State<check_out> {
-  String text ='Hi';
-
-
+  double Delivery = 5;
 
   @override
   Widget build(BuildContext context) {
@@ -126,9 +125,9 @@ class _check_outState extends State<check_out> {
                              margin: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.01, bottom: MediaQuery.of(context).size.height*0.01),
                               child: Column(
                                 children: [
-                                  price('Order', '95.00', FontWeight.normal),
-                                  price('Delivery', '5.00', FontWeight.normal),
-                                  price('Total', '100.00', FontWeight.bold),
+                                  price('Order', this.widget.SumPrice, FontWeight.normal),
+                                  price('Delivery', Delivery, FontWeight.normal),
+                                  price('Total', this.widget.SumPrice+ Delivery, FontWeight.bold),
                                 ],
                               ),
                             ),
@@ -178,7 +177,7 @@ class _check_outState extends State<check_out> {
     );
   }
 
-  Widget price(String text, String price, FontWeight bold) {
+  Widget price(String text, double price, FontWeight bold) {
     return Padding(
       padding: const EdgeInsets.only(left: 8, right: 8, top: 4),
       child: Container(

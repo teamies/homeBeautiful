@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:home_beautiful/core/tocolor.dart';
 import 'package:home_beautiful/core/_config.dart' as cnf;
@@ -5,7 +6,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 
 
 class MyText {
-  
   static Widget baseText(
       {String text = 'base',
       dynamic size = 18,
@@ -30,17 +30,19 @@ class MyText {
       ),
     );
   }
+
   static TextStyle textStyle(
-      {
-      dynamic size = 18,
+      {dynamic size = 18,
       FontWeight fontWeight = FontWeight.w500,
       String color = cnf.colorBlack,
       TextAlign? textAlign,
+      String fontFamily = 'Poppins',
       TextDecoration? decoration}) {
     return TextStyle(
-          decoration: decoration,
-          fontSize: size.toDouble(),
-          fontWeight: fontWeight,
-          color: color.toColor());
+        fontFamily: fontFamily,
+        decoration: decoration,
+        fontSize: size.toDouble(),
+        fontWeight: fontWeight,
+        color: color.toColor());
   }
 }

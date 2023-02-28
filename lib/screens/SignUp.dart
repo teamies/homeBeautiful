@@ -5,6 +5,8 @@ import 'package:home_beautiful/core/_config.dart';
 import 'package:home_beautiful/screens/LogIn.dart';
 import 'package:swipeable_page_route/swipeable_page_route.dart';
 
+import '../components/lineButton.dart';
+
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
 
@@ -19,10 +21,10 @@ class _SignUpState extends State<SignUp> {
       body: SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height,
-          padding: EdgeInsets.all(20),
+          padding: EdgeInsets.only(top: 20, bottom: 10, left: 20, right: 20),
           width: MediaQuery.of(context).size.width,
           child: Column(
-            children: [Header(), formLogIn(context)],
+            children: [Header(), formLogIn(), lineButton(context)],
           ),
         ),
       ),
@@ -30,54 +32,81 @@ class _SignUpState extends State<SignUp> {
   }
 
   Widget Header() {
-    return Column(crossAxisAlignment: CrossAxisAlignment.center, 
-    children: [
+    return Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+      Row(
+        children: [
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
+            ),
+          ),
+          Container(
+              // decoration: BoxDecoration(border: Border.all()),
+              margin: EdgeInsets.only(
+                  top: 30,
+                  bottom: MediaQuery.of(context).size.height * 0.03,
+                  left: 20,
+                  right: 20),
+              width: 50,
+              height: 50,
+              child: CircleAvatar(
+                backgroundImage: AssetImage('assets/img/MinimalStand.png'),
+              )),
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
+            ),
+          ),
+        ],
+      ),
       Container(
-        padding: EdgeInsets.only(top: 50, bottom: 50),
-        child: Image(image: AssetImage("assets/img/Logo.png"))),
-      MyText.baseText(text: 'Hello!', fontWeight: FontWeight.w400, size: 30),
-      MyText.baseText(
-        text: 'WELCOME BACK', size: 40, fontWeight: FontWeight.w700)
+        margin:
+          EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.03),
+        width: MediaQuery.of(context).size.width / 2,
+        child: MyText.baseText(
+            text: 'WELCOME', size: 40, maxLine: 1, fontWeight: FontWeight.w700),
+      )
     ]);
   }
 
-  Widget formLogIn(BuildContext context) {
+  Widget formLogIn() {
     return Expanded(
       child: Card(
         child: Container(
           // height: double.infinity*2/3,
-          height: MediaQuery.of(context).size.height*3/5,
-          padding: EdgeInsets.only(top: 50, bottom: 50, left: 28, right: 28),
+          height: MediaQuery.of(context).size.height * 3 / 5,
+          padding: EdgeInsets.only(
+              top: MediaQuery.of(context).size.height * 0.05,
+              bottom: MediaQuery.of(context).size.height * 0.05,
+              left: MediaQuery.of(context).size.height * 0.028,
+              right: MediaQuery.of(context).size.height * 0.028),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              formTextField(
-                labelText: 'Name',
-                obscureText: false
-              ),
-              formTextField(
-                labelText: 'Email',
-                obscureText: true
-              ),
-              formTextField(
-                labelText: 'Password',
-                obscureText: true
-              ),
-              formTextField(
-                labelText: 'Confirm Password',
-                obscureText: true
-              ),
+              formTextField(labelText: 'Name', obscureText: false),
+              formTextField(labelText: 'Email', obscureText: true),
+              formTextField(labelText: 'Password', obscureText: true),
+              formTextField(labelText: 'Confirm Password', obscureText: true),
               Container(
                 width: double.infinity,
                 child: TextButton(
                   onPressed: () {
-                    Navigator.push(
-                      context, SwipeablePageRoute( transitionBuilder: (context, animation, secondaryAnimation, isSwipeGesture, child) => LogIn(),  builder: (context) => LogIn()));
+                    Navigator.pushNamedAndRemoveUntil(context, "/logIn", (r) => false);
+                    // Navigator.push(
+                    //     context,
+                    //     SwipeablePageRoute(
+                    //         transitionBuilder: (context,
+                    //                 animation,
+                    //                 secondaryAnimation,
+                    //                 isSwipeGesture,
+                    //                 child) =>
+                    //             LogIn(),
+                    //         builder: (context) => LogIn()));
                   },
                   child: MyText.baseText(text: 'Sign up', color: colorWhite),
                   style: TextButton.styleFrom(
                     backgroundColor: Color(0xff242424),
-                    padding: EdgeInsets.only(top: 15, bottom: 15),
+                    padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02, bottom: MediaQuery.of(context).size.height * 0.02,),
                     shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(Radius.circular(8))),
                   ),
@@ -86,16 +115,16 @@ class _SignUpState extends State<SignUp> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  MyText.baseText(text:'Already have account?', color: colorGray),
+                  MyText.baseText(
+                      text: 'Already have account?', color: colorGray),
                   GestureDetector(
-                    child: MyText.baseText(text: 'Sign in' ),
-                    onTap: (){
+                    child: MyText.baseText(text: 'Sign in'),
+                    onTap: () {
                       Navigator.pop(context);
                     },
                   ),
                 ],
               )
-              
             ],
           ),
         ),
@@ -107,7 +136,10 @@ class _SignUpState extends State<SignUp> {
     return Container(
       width: double.infinity,
       // margin: const EdgeInsets.all(8.0),
-      padding: const EdgeInsets.only(top: 10, bottom: 10, left: 15),
+      padding: EdgeInsets.only(
+          top: MediaQuery.of(context).size.height * 0.01,
+          bottom: MediaQuery.of(context).size.height * 0.01,
+          left: MediaQuery.of(context).size.height * 0.01),
       decoration: BoxDecoration(
           border: Border.all(color: Colors.grey),
           borderRadius: BorderRadius.all(Radius.circular(7))),
@@ -129,7 +161,12 @@ class _SignUpState extends State<SignUp> {
                   labelStyle: MyText.textStyle(color: colorGray)),
             ),
           ),
-          Expanded(flex: 1, child: FaIcon(FontAwesomeIcons.chevronDown, size: 18,))
+          Expanded(
+              flex: 1,
+              child: FaIcon(
+                FontAwesomeIcons.chevronDown,
+                size: 18,
+              ))
         ],
       ),
     );
