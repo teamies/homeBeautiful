@@ -8,13 +8,13 @@ class notificationModel{
 }
 
 List<notificationModel> listNotification = [
-  notificationModel('assets/img/table.png', 'Your order #123456789 has been confirmed','Lorem ipsum dolor sit amet, consectetur adipiscing elit','New','0xff27AE60'),
-  notificationModel('assets/img/table.png', 'Your order #123456789 has been confirmed','Lorem ipsum dolor sit amet, consectetur adipiscing elit','Hot','0xffEB5757'),
-  notificationModel('assets/img/table.png', 'Your order #123456789 has been confirmed','Lorem ipsum dolor sit amet, consectetur adipiscing elit','Hot','0xffEB5757'),
-  notificationModel('assets/img/table.png', 'Your order #123456789 has been confirmed','Lorem ipsum dolor sit amet, consectetur adipiscing elit','New','0xff27AE60'),
-  notificationModel('assets/img/table.png', 'Your order #123456789 has been confirmed','Lorem ipsum dolor sit amet, consectetur adipiscing elit','New','0xff27AE60'),
-  notificationModel('assets/img/table.png', 'Your order #123456789 has been confirmed','Lorem ipsum dolor sit amet, consectetur adipiscing elit','New','0xff27AE60'),
-  notificationModel('assets/img/table.png', 'Your order #123456789 has been confirmed','Lorem ipsum dolor sit amet, consectetur adipiscing elit','New','0xff27AE60'),
-  notificationModel('assets/img/table.png', 'Your order #123456789 has been confirmed','Lorem ipsum dolor sit amet, consectetur adipiscing elit','New','0xff27AE60'),
-  notificationModel('assets/img/table.png', 'Your order #123456789 has been confirmed','Lorem ipsum dolor sit amet, consectetur adipiscing elit','New','0xff27AE60'),
+  notificationModel('assets/img/MinimalStand.png', 'Your order #123456789 has been confirmed','Lorem ipsum dolor sit amet, consectetur adipiscing elit','New','0xff27AE60'),
+  notificationModel('assets/img/MinimalStand.png', 'Your order #123456789 has been confirmed','Lorem ipsum dolor sit amet, consectetur adipiscing elit','Hot','0xffEB5757'),
+  notificationModel('assets/img/MinimalStand.png', 'Your order #123456789 has been confirmed','Lorem ipsum dolor sit amet, consectetur adipiscing elit','Hot','0xffEB5757'),
+  notificationModel('assets/img/MinimalStand.png', 'Your order #123456789 has been confirmed','Lorem ipsum dolor sit amet, consectetur adipiscing elit','New','0xff27AE60'),
+  notificationModel('assets/img/MinimalStand.png', 'Your order #123456789 has been confirmed','Lorem ipsum dolor sit amet, consectetur adipiscing elit','New','0xff27AE60'),
+  notificationModel('assets/img/MinimalStand.png', 'Your order #123456789 has been confirmed','Lorem ipsum dolor sit amet, consectetur adipiscing elit','New','0xff27AE60'),
+  notificationModel('assets/img/MinimalStand.png', 'Your order #123456789 has been confirmed','Lorem ipsum dolor sit amet, consectetur adipiscing elit','New','0xff27AE60'),
+  notificationModel('assets/img/MinimalStand.png', 'Your order #123456789 has been confirmed','Lorem ipsum dolor sit amet, consectetur adipiscing elit','New','0xff27AE60'),
+  notificationModel('assets/img/MinimalStand.png', 'Your order #123456789 has been confirmed','Lorem ipsum dolor sit amet, consectetur adipiscing elit','New','0xff27AE60'),
 ];

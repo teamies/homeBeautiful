@@ -52,15 +52,14 @@ class _notificationState extends State<notification> {
           child: Row(
             children: [
               Expanded(
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(maxWidth: 100,minWidth: 80),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(image),
-                        ),
-                        borderRadius: BorderRadius.circular(10)),
-                  ),
+                child:  Container(
+                  width: 100,
+                  height: 100,
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.circular(15),
+                      child: Align(
+                          alignment: Alignment.topCenter,
+                          child: Image.asset(image,width: 100, height: 100, fit: BoxFit.cover,))),
                 ),
               ),
               Padding(
