@@ -18,8 +18,6 @@ class my_cart extends StatefulWidget {
 
 class _my_cartState extends State<my_cart> {
   double SumPrice =0;
-  bool isDelete = false;
-  int indexDelete = -1;
 
   void sum(){
     setState(() {
