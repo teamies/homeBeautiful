@@ -51,17 +51,16 @@ class _notificationState extends State<notification> {
           constraints: BoxConstraints(maxHeight: 100, minHeight: 80),
           child: Row(
             children: [
-              Expanded(
-                child:  Container(
-                  width: 100,
-                  height: 100,
-                  child: ClipRRect(
-                      borderRadius: BorderRadius.circular(15),
-                      child: Align(
-                          alignment: Alignment.topCenter,
-                          child: Image.asset(image,width: 100, height: 100, fit: BoxFit.cover,))),
-                ),
+              Container(
+                width: 100,
+                height: 100,
+                child: ClipRRect(
+                    borderRadius: BorderRadius.circular(15),
+                    child: Align(
+                        alignment: Alignment.topCenter,
+                        child: Image.asset(image,width: 100, height: 100, fit: BoxFit.cover,))),
               ),
+
               Padding(
                   padding: const EdgeInsets.only(left: 16),
                   child: Stack(children: [

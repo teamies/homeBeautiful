@@ -1,8 +1,8 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:home_beautiful/components/notification.dart';
 import 'package:home_beautiful/components/titleBar.dart';
-import 'package:home_beautiful/models/product.dart';
 import 'package:home_beautiful/screens/check_out.dart';
 import 'package:swipeable_page_route/swipeable_page_route.dart';
 
@@ -235,6 +235,7 @@ class _my_cartState extends State<my_cart> {
                         setState(() {
                           listMyCart.removeAt(index);
                           sum();
+                          notification.onDelete(context);
                         });
                       },
                       child:

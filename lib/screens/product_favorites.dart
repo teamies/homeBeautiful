@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:home_beautiful/components/mytext.dart';
+import 'package:home_beautiful/components/notification.dart';
 import 'package:home_beautiful/models/myCart.dart';
 import 'package:home_beautiful/models/product.dart';
 import 'package:home_beautiful/screens/my_cart.dart';
@@ -16,6 +17,7 @@ class product_favorites extends StatefulWidget {
 }
 
 class _product_favoritesState extends State<product_favorites> {
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -51,7 +53,8 @@ class _product_favoritesState extends State<product_favorites> {
                           listMyCart.addAll(list);
                         }
                       });
-                      Navigator.push(context, SwipeablePageRoute(builder: (context) => my_cart()));
+                      notification.onAdd(context);
+                      //Navigator.push(context, SwipeablePageRoute(builder: (context) => my_cart()));
                       },
                       child: const Text('Add all to my cart')),
                 )
@@ -106,6 +109,7 @@ class _product_favoritesState extends State<product_favorites> {
                         onTap: (){
                           setState(() {
                             listFavorites.removeAt(index);
+                            notification.onDelete(context);
                           });
                         },
                         child:
@@ -116,6 +120,7 @@ class _product_favoritesState extends State<product_favorites> {
                         setState(() {
                           List<myCart>  list= [myCart(item.image, item.title, item.price, 1)];
                           listMyCart.addAll(list);
+                          notification.onAdd(context);
                         });
                       },
                       child: Container(
