@@ -20,7 +20,7 @@ class _SignUpState extends State<SignUp> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-          height: MediaQuery.of(context).size.height,
+          // height: MediaQuery.of(context).size.height,
           padding: EdgeInsets.only(top: 20, bottom: 10, left: 20, right: 20),
           width: MediaQuery.of(context).size.width,
           child: Column(
@@ -70,11 +70,11 @@ class _SignUpState extends State<SignUp> {
   }
 
   Widget formLogIn() {
-    return Expanded(
-      child: Card(
+    return 
+       Card(
         child: Container(
           // height: double.infinity*2/3,
-          height: MediaQuery.of(context).size.height * 3 / 5,
+          height: MediaQuery.of(context).size.height * 4 / 5,
           padding: EdgeInsets.only(
               top: MediaQuery.of(context).size.height * 0.05,
               bottom: MediaQuery.of(context).size.height * 0.05,
@@ -128,7 +128,6 @@ class _SignUpState extends State<SignUp> {
             ],
           ),
         ),
-      ),
     );
   }
 
@@ -137,8 +136,8 @@ class _SignUpState extends State<SignUp> {
       width: double.infinity,
       // margin: const EdgeInsets.all(8.0),
       padding: EdgeInsets.only(
-          top: MediaQuery.of(context).size.height * 0.01,
-          bottom: MediaQuery.of(context).size.height * 0.01,
+          top: MediaQuery.of(context).size.height * 0.015,
+          bottom: MediaQuery.of(context).size.height * 0.015,
           left: MediaQuery.of(context).size.height * 0.01),
       decoration: BoxDecoration(
           border: Border.all(color: Colors.grey),

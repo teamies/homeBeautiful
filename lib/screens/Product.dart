@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:home_beautiful/components/buttonBar.dart';
 import 'package:home_beautiful/components/lineButton.dart';
 import 'package:home_beautiful/components/mytext.dart';
+import 'package:home_beautiful/components/notification.dart';
 import 'package:home_beautiful/core/_config.dart';
 import 'package:home_beautiful/models/favorites.dart';
 import 'package:home_beautiful/models/myCart.dart';
@@ -311,6 +312,7 @@ class _ProductState extends State<Product> {
                           List<myCart> list = [myCart(item.image, item.title, item.price, _counter)];
                           listMyCart.addAll(list);
                       });
+                      notification.onAdd(context);
                       Navigator.push(
                         context, MaterialPageRoute(builder: (context) => my_cart()));
                       }
