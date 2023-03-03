@@ -18,8 +18,6 @@ class my_cart extends StatefulWidget {
 
 class _my_cartState extends State<my_cart> {
   double SumPrice =0;
-  bool isDelete = false;
-  int indexDelete = -1;
 
   void sum(){
     setState(() {
@@ -128,7 +126,15 @@ class _my_cartState extends State<my_cart> {
                                     MaterialStateProperty.all(Colors.black),
                                   ),
                                   onPressed: () {
-                                    Navigator.push(context, SwipeablePageRoute(builder: (context) => check_out(SumPrice: SumPrice,)));
+                                    if(SumPrice >0){
+                                      Navigator.push(context, SwipeablePageRoute(builder: (context) => check_out(SumPrice: SumPrice,)));
+                                    }
+                                    else {
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(content: Text('Vui lòng thêm sản phẩm vào giỏ hàng'),
+                                        duration: Duration(seconds: 1),)
+                                      );
+                                    }
                                   },
                                   child:const Text('Check Out')),
                             )
