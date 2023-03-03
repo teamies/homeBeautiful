@@ -81,7 +81,7 @@ class _notificationState extends State<notification> {
                         ),
                       ),
                       Padding(
-                          padding: EdgeInsets.only(top: 80, left: 200),
+                          padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.11, left: MediaQuery.of(context).size.width*0.5),
                           child: Text(
                             type,
                             style: TextStyle(color: Color(int.parse(color))),
