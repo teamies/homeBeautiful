@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "381487377709",
+    "firebase_url": "https://homebeautiful-d1d87-default-rtdb.firebaseio.com",
+    "project_id": "homebeautiful-d1d87",
+    "storage_bucket": "homebeautiful-d1d87.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:381487377709:android:5cd899dd27b294655c37a4",
+        "android_client_info": {
+          "package_name": "com.example.home_beautiful"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "381487377709-li3eftgvnkl1v0m30n1oup9ohbqnq669.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1cZEUqlv_h7rK7LBOipKADh7jcEw4ACk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "381487377709-li3eftgvnkl1v0m30n1oup9ohbqnq669.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
