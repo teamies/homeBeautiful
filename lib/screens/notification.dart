@@ -51,43 +51,43 @@ class _notificationState extends State<notification> {
           constraints: BoxConstraints(maxHeight: 100, minHeight: 80),
           child: Row(
             children: [
-              Expanded(
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(maxWidth: 100,minWidth: 80),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(image),
-                        ),
-                        borderRadius: BorderRadius.circular(10)),
-                  ),
-                ),
+              Container(
+                width: 100,
+                height: 100,
+                child: ClipRRect(
+                    borderRadius: BorderRadius.circular(15),
+                    child: Align(
+                        alignment: Alignment.topCenter,
+                        child: Image.asset(image,width: 100, height: 100, fit: BoxFit.cover,))),
               ),
-              Padding(
-                  padding: const EdgeInsets.only(left: 16),
-                  child: Stack(children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.6,
-                      child: Column(
-                        children: [
-                          MyText.baseText(
-                              text: title,
-                              size: 14,
-                              fontWeight: FontWeight.bold),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 4),
-                            child: MyText.baseText(text: comment, size: 14),
-                          ),
-                        ],
+
+              Expanded(
+                child: Padding(
+                    padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.09),
+                    child: Stack(children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.6,
+                        child: Column(
+                          children: [
+                            MyText.baseText(
+                                text: title,
+                                size: 14,
+                                fontWeight: FontWeight.bold),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 4),
+                              child: MyText.baseText(text: comment, size: 14),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    Padding(
-                        padding: EdgeInsets.only(top: 80, left: 200),
-                        child: Text(
-                          type,
-                          style: TextStyle(color: Color(int.parse(color))),
-                        ))
-                  ])),
+                      Padding(
+                          padding: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.11, left: MediaQuery.of(context).size.width*0.5),
+                          child: Text(
+                            type,
+                            style: TextStyle(color: Color(int.parse(color))),
+                          ))
+                    ])),
+              ),
             ],
           ),
         ),

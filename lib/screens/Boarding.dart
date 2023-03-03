@@ -91,9 +91,9 @@ class Boarding extends StatelessWidget {
                     ),
                   ],
                   isRepeatingAnimation: true,
-                  onTap: () {
-                    print("Tap Event");
-                  },
+                  // onTap: () {
+                  //   print("Tap Event");
+                  // },
                 ),
               ),
             ),
