@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:home_beautiful/components/buttonBar.dart';
 import 'package:home_beautiful/components/lineButton.dart';
 import 'package:home_beautiful/components/mytext.dart';
+import 'package:home_beautiful/components/notification.dart';
 import 'package:home_beautiful/core/_config.dart';
+import 'package:home_beautiful/models/favorites.dart';
+import 'package:home_beautiful/models/myCart.dart';
 import 'package:home_beautiful/models/product.dart';
 import 'package:home_beautiful/screens/Home.dart';
 import 'package:home_beautiful/screens/Review.dart';
@@ -281,6 +284,9 @@ class _ProductState extends State<Product> {
                     onPressed: () {
                       setState(() {
                         check =! check;
+                        final item = this.widget.products;
+                          List<favorites> list = [favorites(item.image, item.title, item.price, 1)];
+                          listFavorites.addAll(list);
                       });
                     },
                     child: Icon(Icons.bookmark_outline, color: check? Color(0xFF909090) : Colors.white,),
@@ -300,8 +306,17 @@ class _ProductState extends State<Product> {
                   flex: 5,
                   child: TextButton(
                     onPressed: () {
+                      if( _counter > 0){
+                        setState(() {
+                        final item = this.widget.products;
+                          List<myCart> list = [myCart(item.image, item.title, item.price, _counter)];
+                          listMyCart.addAll(list);
+                      });
+                      notification.onAdd(context);
                       Navigator.push(
                         context, MaterialPageRoute(builder: (context) => my_cart()));
+                      }
+                      
                     },
                     child: MyText.baseText(text: 'Add to cart', color: colorWhite),
                     style: TextButton.styleFrom(

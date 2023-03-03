@@ -20,14 +20,16 @@ class _LogInState extends State<LogIn> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.only(top: 20, bottom: 10, left: 20, right: 20),
-            child: Column(
-              children: [Header(), Expanded(child: formLogIn()), lineButton(context)],
+        child: SingleChildScrollView(
+          child: Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              padding: EdgeInsets.only(top: 20, bottom: 10, left: 20, right: 20),
+              child: Column(
+                children: [Header(), Expanded(child: formLogIn()), lineButton(context)],
+              ),
             ),
-          ),
+        ),
       ),
     );
   }
@@ -121,8 +123,8 @@ class _LogInState extends State<LogIn> {
     return Container(
       width: double.infinity,
       // margin: const EdgeInsets.all(8.0),
-      padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.01,
-          bottom: MediaQuery.of(context).size.height * 0.01,
+      padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.015,
+          bottom: MediaQuery.of(context).size.height * 0.015,
           left: MediaQuery.of(context).size.height * 0.01),
       decoration: BoxDecoration(
           border: Border.all(color: Colors.grey),
@@ -137,7 +139,9 @@ class _LogInState extends State<LogIn> {
               cursorHeight: 25,
               obscureText: obscureText,
               decoration: InputDecoration(
-                  border: OutlineInputBorder(borderSide: BorderSide.none),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide.none
+                    ),
                   isDense: true, // Added this
                   contentPadding: EdgeInsets.all(8),
                   fillColor: Colors.black,
