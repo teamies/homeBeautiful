@@ -6,18 +6,18 @@ import 'mytext.dart';
    class notification {
   static void onDelete(BuildContext context){
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: MyText.baseText(text: 'Xoá thành công', fontWeight: FontWeight.bold),
+      const SnackBar(
+        content: Text('Xoá thành công'),
         duration: Duration(seconds: 1),
-        backgroundColor: Colors.white,),
+      ),
     );
   }
  static void onAdd(BuildContext context){
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: MyText.baseText(text: 'Thêm thành công', fontWeight: FontWeight.bold),
+     const SnackBar(
+        content: Text('Thêm thành công'),
         duration: Duration(seconds: 1),
-        backgroundColor: Colors.white,),
+      ),
     );
   }
 }
