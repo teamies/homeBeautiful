@@ -18,6 +18,9 @@ class Boarding extends StatelessWidget {
     Colors.red,
   ];
 
+  void _handleSignUp(BuildContext context) {
+    Navigator.pushNamedAndRemoveUntil( context, "/signUp", (r) => false);
+}
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,7 +31,6 @@ class Boarding extends StatelessWidget {
                 fit: BoxFit.cover,
                 image: AssetImage("assets/img/Boarding.png"))),
         child: Column(
-          // mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Container(
               padding: EdgeInsets.only(top: 30, bottom: 30, right: 10),
@@ -56,21 +58,11 @@ class Boarding extends StatelessWidget {
                 ),
               ),
             ),
-            // Expanded(
-            //   child: Container(
-            //     child: MyText.baseText(
-            //       text:
-            //           'The best simple place where you discover most wonderful furniture and make you home beautiful',
-            //       color: colorGray,
-            //     ),
-            //   ),
-            // ),
             Container(
               width: MediaQuery.of(context).size.width,
               child: TextButton(
                 onPressed: (() {
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, "/signUp", (r) => false);
+                  _handleSignUp(context);
                   // Navigator.push(
                   //     context,
                   //     PageTransition(
@@ -91,9 +83,9 @@ class Boarding extends StatelessWidget {
                     ),
                   ],
                   isRepeatingAnimation: true,
-                  // onTap: () {
-                  //   print("Tap Event");
-                  // },
+                  onTap: () {
+                    _handleSignUp(context);
+                  },
                 ),
               ),
             ),

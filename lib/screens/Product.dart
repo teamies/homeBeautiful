@@ -10,6 +10,7 @@ import 'package:home_beautiful/models/myCart.dart';
 import 'package:home_beautiful/models/product.dart';
 import 'package:home_beautiful/screens/Home.dart';
 import 'package:home_beautiful/screens/Review.dart';
+import 'package:home_beautiful/screens/SignUp.dart';
 import 'package:home_beautiful/screens/my_cart.dart';
 import 'package:home_beautiful/screens/product_favorites.dart';
 
@@ -23,7 +24,7 @@ class Product extends StatefulWidget {
 }
 
 class _ProductState extends State<Product> {
-  bool check = true;
+  bool check = false;
   bool checkcolorWhite = true;
   bool checkcolorBrown = false;
   bool checkcolorNude = false;
@@ -284,14 +285,17 @@ class _ProductState extends State<Product> {
                     onPressed: () {
                       setState(() {
                         check =! check;
-                        final item = this.widget.products;
+                        if( check == true){
+                          final item = this.widget.products;
                           List<favorites> list = [favorites(item.image, item.title, item.price, 1)];
                           listFavorites.addAll(list);
+                        }
+                        
                       });
                     },
-                    child: Icon(Icons.bookmark_outline, color: check? Color(0xFF909090) : Colors.white,),
+                    child: Icon(Icons.bookmark_outline, color: check? Colors.white : Color(0xFF909090) ,),
                     style: TextButton.styleFrom(
-                      backgroundColor: check? Color(0xFFE0E0E0) : Colors.black,
+                      backgroundColor: check? Colors.black :Color(0xFFE0E0E0) ,
                       padding: EdgeInsets.only(top: 15, bottom: 15),
                       shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(8))),
