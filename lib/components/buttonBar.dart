@@ -16,8 +16,7 @@ class buttonBar extends StatefulWidget {
 class _buttonBarState extends State<buttonBar> {
   
   List tap = [Home(), product_favorites(), notification(), profile()];
-  
-  get z => null;
+
 
   @override
   Widget build(BuildContext context) {
