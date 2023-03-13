@@ -5,6 +5,7 @@ import 'package:home_beautiful/components/mytext.dart';
 import 'package:home_beautiful/core/_config.dart';
 import 'package:home_beautiful/screens/LogIn.dart';
 import 'package:home_beautiful/screens/SignUp.dart';
+import 'package:home_beautiful/screens/treeScreen.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:swipeable_page_route/swipeable_page_route.dart';
 
@@ -19,7 +20,9 @@ class Boarding extends StatelessWidget {
   ];
 
   void _handleSignUp(BuildContext context) {
-    Navigator.pushNamedAndRemoveUntil( context, "/signUp", (r) => false);
+    // Navigator.pushNamedAndRemoveUntil( context, "/signUp", (r) => false);
+    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> treeScreen()), (r) => false);
+
 }
   @override
   Widget build(BuildContext context) {
@@ -63,12 +66,6 @@ class Boarding extends StatelessWidget {
               child: TextButton(
                 onPressed: (() {
                   _handleSignUp(context);
-                  // Navigator.push(
-                  //     context,
-                  //     PageTransition(
-                  //         duration: Duration(milliseconds: 650),
-                  //         type: PageTransitionType.rightToLeft,
-                  //         child: SignUp()));
                 }),
                 style: TextButton.styleFrom(
                     backgroundColor: Color(0xff242424),

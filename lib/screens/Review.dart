@@ -23,8 +23,8 @@ class _ReviewState extends State<Review> {
           padding: EdgeInsets.all(20),
           child: Column(
             children: [
-              appBar(), 
-              Header(), 
+              appBar(),
+              Header(),
               Expanded(child: comments()),
               Container(
                 width: double.infinity,
@@ -89,18 +89,18 @@ class _ReviewState extends State<Review> {
               width: 100,
               height: 100,
               decoration: BoxDecoration(
-                image: DecorationImage(
-                   alignment: Alignment.center,
-                    fit: BoxFit.cover,
-                    image: AssetImage(listProduct[0].image)
-                 )
+                // image: DecorationImage(
+                //    alignment: Alignment.center,
+                //     fit: BoxFit.cover,
+                //     image: AssetImage(listProduct[0].image)
+                //  )
               ),
             ),
           ),
           Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                MyText.baseText(text: listProduct[0].title, size: 16, fontWeight: FontWeight.w400),
+              //  MyText.baseText(text: listProduct[0].title, size: 16, fontWeight: FontWeight.w400),
                 Row(
                   children: [
                     Icon(Icons.star, color: Colors.yellow,),

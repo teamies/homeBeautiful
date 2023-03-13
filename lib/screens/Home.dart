@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:home_beautiful/components/mytext.dart';
 import 'package:home_beautiful/core/_config.dart';
+import 'package:home_beautiful/models/databseManage.dart';
 import 'package:home_beautiful/models/product.dart';
-import 'package:home_beautiful/screens/LogIn.dart';
 import 'package:home_beautiful/screens/Product.dart';
 import 'package:home_beautiful/screens/my_cart.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+
+import '../models/product.dart';
+import '../models/product.dart';
+import '../models/product.dart';
+import '../models/product.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -30,16 +33,27 @@ class _HomeState extends State<Home> {
    bool checkTable = false;
    bool checkArmchair = false;
    bool checkbed = false;
-  //  List productType = ['Popular', 'Chair','Table','Armchair','bed'];
   String productType = 'Popular';
 
-  //  void asas(){
-  //   for(int i=0;i<listProduct.length;i++){
-  //     if(listProduct[i].type == productType){
-        
-  //     }
-  //   }
-  //  }
+  List<product> listProduct = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    products();
+  }
+
+  products() async{
+    dynamic res = await databaseManage().getProduct();
+    if(res != null){
+      setState(() {
+        listProduct = res;
+      });
+    }
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +85,7 @@ class _HomeState extends State<Home> {
                                     },
                                     child: contentProduct(
                                       img: listProduct[index].image,
-                                      lable: listProduct[index].title,
+                                      lable: listProduct[index].name,
                                       price: listProduct[index].price
                                     ),
                                   )
@@ -276,7 +290,7 @@ class _HomeState extends State<Home> {
       CrossAxisAlignment? crossAxisAlignment,
       String? img,
       String? lable,
-      double? price}) {
+      num? price}) {
     return Container(
         // decoration: BoxDecoration(border: Border.all()),
         child: Column(
@@ -295,10 +309,7 @@ class _HomeState extends State<Home> {
                     // child: Text('data'),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
-                      child: Image.asset(
-                        img!,
-                        // width: MediaQuery.of(context).size.width * 0.5,
-                      ),
+                      child: Image.network(img!)
                     )
                   ),
                   GestureDetector(
@@ -329,7 +340,7 @@ class _HomeState extends State<Home> {
                   color: colorGray,
                   fontWeight: FontWeight.w400),
             ),
-            MyText.baseText(text: '\$ $price\0', size: 18, fontWeight: FontWeight.bold),
+            MyText.baseText(text: '\$ $price', size: 18, fontWeight: FontWeight.bold),
           ],
         ),
     );

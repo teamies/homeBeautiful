@@ -1,37 +1,111 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:home_beautiful/components/buttonBar.dart';
-import 'package:home_beautiful/components/lineButton.dart';
-import 'package:home_beautiful/components/mytext.dart';
-import 'package:home_beautiful/core/_config.dart';
+import 'package:home_beautiful/models/auth_service.dart';
 import 'package:home_beautiful/screens/Home.dart';
-import 'package:home_beautiful/screens/SignUp.dart';
 import 'package:swipeable_page_route/swipeable_page_route.dart';
 
+import '../components/lineButton.dart';
+import '../components/mytext.dart';
+import '../core/_config.dart';
+import 'SignUp.dart';
+
 class LogIn extends StatefulWidget {
-  const LogIn({super.key});
+  String title;
+  LogIn({super.key, required this.title});
 
   @override
   State<LogIn> createState() => _LogInState();
 }
 
 class _LogInState extends State<LogIn> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.only(top: 20, bottom: 10, left: 20, right: 20),
-              child: Column(
-                children: [Header(), Expanded(child: formLogIn()), lineButton(context)],
-              ),
+  String? errorMesage = '';
+  // bool isLogin = true;
+
+  final TextEditingController _controllerEmail = TextEditingController();
+  final TextEditingController _controllerPassword = TextEditingController();
+
+  Future<dynamic> signInWithEmailAndPassword() async {
+    try {
+      await Auth().signInWithEmailAndPassword(
+          email: _controllerEmail.text, password: _controllerPassword.text);
+      Navigator.pushNamedAndRemoveUntil(
+          context, '/buttonBar', (route) => false);
+    } on FirebaseAuthException catch (e) {
+      setState(() {
+        errorMesage = e.message;
+      });
+    }
+  }
+
+  Future<void> createUserWithEmailAndPassword() async {
+    try {
+      await Auth().createUserWithEmailAndPassword(
+          email: _controllerEmail.text, password: _controllerPassword.text);
+    } on FirebaseAuthException catch (e) {
+      setState(() {
+        errorMesage = e.message;
+      });
+    }
+  }
+
+  Widget _entryField(
+    String title,
+    TextEditingController controller,
+  ) {
+    return Container(
+      width: double.infinity,
+      // margin: const EdgeInsets.all(8.0),
+      padding: EdgeInsets.only(
+          top: MediaQuery.of(context).size.height * 0.015,
+          bottom: MediaQuery.of(context).size.height * 0.015,
+          left: MediaQuery.of(context).size.height * 0.01),
+      decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey),
+          borderRadius: BorderRadius.all(Radius.circular(7))),
+      child: Row(
+        children: [
+          Expanded(
+            flex: 7,
+            child: TextFormField(
+              controller: controller,
+              style: MyText.textStyle(),
+              cursorColor: Colors.black,
+              cursorHeight: 25,
+              obscureText: false,
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(borderSide: BorderSide.none),
+                  isDense: true, // Added this
+                  contentPadding: EdgeInsets.all(8),
+                  fillColor: Colors.black,
+                  labelText: title,
+                  labelStyle: MyText.textStyle(color: colorGray)),
             ),
-        ),
+          ),
+          Expanded(
+              flex: 1,
+              child: FaIcon(
+                FontAwesomeIcons.chevronDown,
+                size: 18,
+              ))
+        ],
       ),
     );
+  }
+
+  Widget _errorMesage() {
+    return Text(errorMesage == '' ? '' : '$errorMesage');
+  }
+
+  Widget _submitButton() {
+    return TextButton(
+        onPressed: () {
+          signInWithEmailAndPassword();
+        },
+        child: Text('Login'));
   }
 
   Widget Header() {
@@ -65,10 +139,14 @@ class _LogInState extends State<LogIn> {
       MyText.baseText(text: 'Hello!', fontWeight: FontWeight.w400, size: 30),
       Container(
         margin:
-          EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.03),
+            EdgeInsets.only(bottom: MediaQuery.of(context).size.height * 0.03),
         width: MediaQuery.of(context).size.width * 0.7,
         child: MyText.baseText(
-            text: 'WELCOME BACK', size: 40, fontWeight: FontWeight.w700, maxLine: 1),
+            textAlign: TextAlign.center,
+            text: widget.title,
+            size: 40,
+            fontWeight: FontWeight.w700,
+            maxLine: 1),
       )
     ]);
   }
@@ -76,42 +154,51 @@ class _LogInState extends State<LogIn> {
   Widget formLogIn() {
     return Card(
       child: Container(
-        // height: double.infinity*2/3,
-        height: MediaQuery.of(context).size.height * 1 / 2,
         padding: EdgeInsets.only(
-              top: MediaQuery.of(context).size.height * 0.05,
-              bottom: MediaQuery.of(context).size.height * 0.05,
-              left: MediaQuery.of(context).size.height * 0.028,
-              right: MediaQuery.of(context).size.height * 0.028),
+            top: MediaQuery.of(context).size.height * 0.05,
+            bottom: MediaQuery.of(context).size.height * 0.05,
+            left: MediaQuery.of(context).size.height * 0.028,
+            right: MediaQuery.of(context).size.height * 0.028),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            formTextField(labelText: 'Email', obscureText: false),
-            formTextField(labelText: 'Password', obscureText: true),
-            MyText.baseText(text: 'Forgot Password', color: colorGray),
+            _entryField('email', _controllerEmail),
+            SizedBox(
+              height: 25,
+            ),
+            _entryField('password', _controllerPassword),
+            _errorMesage(),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: MyText.baseText(text: 'Forgot Password', color: colorGray),
+            ),
             Container(
               width: double.infinity,
               child: TextButton(
                 onPressed: () {
-                  Navigator.pushNamedAndRemoveUntil(context, "/buttonBar", (r) => false);
-                  // Navigator.push(context,
-                  //     MaterialPageRoute(builder: (context) => buttonBar(selectedIndex: 0,)));
+                  signInWithEmailAndPassword();
                 },
                 child: MyText.baseText(text: 'Log in', color: colorWhite),
                 style: TextButton.styleFrom(
                   backgroundColor: Color(0xff242424),
-                  padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02, bottom: MediaQuery.of(context).size.height * 0.02,),
+                  padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height * 0.02,
+                    bottom: MediaQuery.of(context).size.height * 0.02,
+                  ),
                   shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(8))),
                 ),
               ),
             ),
-            GestureDetector(
-              child: MyText.baseText(text: 'Sign Up', color: colorGray),
-              onTap: () {
-                Navigator.push(context,
-                    SwipeablePageRoute(builder: (context) => SignUp()));
-              },
+            Padding(
+              padding: const EdgeInsets.only(top: 15.0),
+              child: GestureDetector(
+                child: MyText.baseText(text: 'Sign Up', color: colorGray),
+                onTap: () {
+                  Navigator.push(context,
+                      SwipeablePageRoute(builder: (context) => SignUp()));
+                  // _signIn();
+                },
+              ),
             ),
           ],
         ),
@@ -119,43 +206,30 @@ class _LogInState extends State<LogIn> {
     );
   }
 
-  Widget formTextField({String? labelText, required bool obscureText}) {
-    return Container(
-      width: double.infinity,
-      // margin: const EdgeInsets.all(8.0),
-      padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.015,
-          bottom: MediaQuery.of(context).size.height * 0.015,
-          left: MediaQuery.of(context).size.height * 0.01),
-      decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
-          borderRadius: BorderRadius.all(Radius.circular(7))),
-      child: Row(
-        children: [
-          Expanded(
-            flex: 7,
-            child: TextField(
-              style: MyText.textStyle(),
-              cursorColor: Colors.black,
-              cursorHeight: 25,
-              obscureText: obscureText,
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide.none
-                    ),
-                  isDense: true, // Added this
-                  contentPadding: EdgeInsets.all(8),
-                  fillColor: Colors.black,
-                  labelText: labelText,
-                  labelStyle: MyText.textStyle(color: colorGray)),
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        height: double.infinity,
+        width: double.infinity,
+        padding: EdgeInsets.all(20),
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: Container(
+              // height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              padding:
+                  EdgeInsets.only(top: 20, bottom: 10, left: 20, right: 20),
+              child: Column(
+                children: [
+                  Header(), formLogIn(),
+                  //  _loginRegisterButton(),
+                  lineButton(context)
+                ],
+              ),
             ),
           ),
-          Expanded(
-              flex: 1,
-              child: FaIcon(
-                FontAwesomeIcons.chevronDown,
-                size: 18,
-              ))
-        ],
+        ),
       ),
     );
   }

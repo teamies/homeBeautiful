@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:home_beautiful/components/mytext.dart';
@@ -6,6 +7,7 @@ import 'package:home_beautiful/screens/LogIn.dart';
 import 'package:swipeable_page_route/swipeable_page_route.dart';
 
 import '../components/lineButton.dart';
+import '../models/auth_service.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -15,6 +17,39 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  String? errorMesage ='';
+
+  final TextEditingController _controllerName = TextEditingController();
+  final TextEditingController _controllerEmail = TextEditingController();
+  final TextEditingController _controllerPassword = TextEditingController();
+  final TextEditingController _controllerConfirmPassword = TextEditingController();
+
+  Future<void> createUserWithEmailAndPassword() async{
+    if( _controllerConfirmPassword.text == _controllerPassword.text){
+      try{
+      await Auth().createUserWithEmailAndPassword(email: _controllerEmail.text, password: _controllerPassword.text);
+      await Auth().savingUserData(name: _controllerName.text, password: _controllerPassword.text, ConfirmPassword: _controllerConfirmPassword.text, email: _controllerEmail.text);
+      Navigator.pushNamedAndRemoveUntil(context, '/logIn2', (route) => false);
+      print('------------------------------ok------------------------');
+      }on FirebaseAuthException catch (e){
+        setState(() {
+          errorMesage = e.message;print('================' +e.toString());
+          print('-------------------false-------------------');
+        });
+      }
+    }else{
+      print('false');
+    }
+  }
+  
+
+  Widget _errorMesage(){
+    return Text(errorMesage == '' ? '' : '$errorMesage'
+    );
+  }
+  
+  
+  bool check = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +59,8 @@ class _SignUpState extends State<SignUp> {
           padding: EdgeInsets.only(top: 20, bottom: 10, left: 20, right: 20),
           width: MediaQuery.of(context).size.width,
           child: Column(
-            children: [Header(), formLogIn(), lineButton(context)],
+            children: [Header(), formSignUp(),
+            _errorMesage(), lineButton(context)],
           ),
         ),
       ),
@@ -69,7 +105,7 @@ class _SignUpState extends State<SignUp> {
     ]);
   }
 
-  Widget formLogIn() {
+  Widget formSignUp() {
     return 
        Card(
         child: Container(
@@ -83,25 +119,26 @@ class _SignUpState extends State<SignUp> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              formTextField(labelText: 'Name', obscureText: false),
-              formTextField(labelText: 'Email', obscureText: true),
-              formTextField(labelText: 'Password', obscureText: true),
-              formTextField(labelText: 'Confirm Password', obscureText: true),
+              _entryField(labelText: 'Name', obscureText: false, controller: _controllerName , border: Border.all(color: Colors.grey)),
+              _entryField(labelText: 'Email', obscureText: false, controller: _controllerEmail, border: Border.all(color: Colors.grey)),
+              _entryField(labelText: 'Password', obscureText: false, controller: _controllerPassword, border: Border.all(color: Colors.grey)),
+              // _entryField(labelText: 'Confirm Password', obscureText: false, controller: _controllerConfirmPassword, border: (_controllerConfirmPassword.text == _controllerPassword.text) ? Border.all(color: Colors.grey) : Border.all(color: Colors.red)),
+              GestureDetector(
+                child: 
+              _entryField(labelText: 'Confirm Password', obscureText: false, controller: _controllerConfirmPassword, border: (check == true) ? Border.all(color: Colors.grey) : Border.all(color: Colors.red)),
+              onTap: () {
+                check =! check;
+              (_controllerConfirmPassword == _controllerPassword) ? check = true : check = false;
+              },
+              ),
               Container(
                 width: double.infinity,
                 child: TextButton(
                   onPressed: () {
-                    Navigator.pushNamedAndRemoveUntil(context, "/logIn", (r) => false);
-                    // Navigator.push(
-                    //     context,
-                    //     SwipeablePageRoute(
-                    //         transitionBuilder: (context,
-                    //                 animation,
-                    //                 secondaryAnimation,
-                    //                 isSwipeGesture,
-                    //                 child) =>
-                    //             LogIn(),
-                    //         builder: (context) => LogIn()));
+                    // print('ừeff' +_controllerPassword.text);
+                    // if( _controllerConfirmPassword == _controllerPassword){
+                      createUserWithEmailAndPassword();
+                    // }
                   },
                   child: MyText.baseText(text: 'Sign up', color: colorWhite),
                   style: TextButton.styleFrom(
@@ -120,7 +157,7 @@ class _SignUpState extends State<SignUp> {
                   GestureDetector(
                     child: MyText.baseText(text: 'Sign in'),
                     onTap: () {
-                      Navigator.pop(context);
+                    Navigator.pushNamedAndRemoveUntil(context, "/logIn2", (r) => false);
                     },
                   ),
                 ],
@@ -131,7 +168,7 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
-  Widget formTextField({String? labelText, required bool obscureText}) {
+  Widget _entryField({ Function? onChanged,String? labelText, required bool obscureText, TextEditingController? controller, Border? border }) {
     return Container(
       width: double.infinity,
       // margin: const EdgeInsets.all(8.0),
@@ -140,13 +177,17 @@ class _SignUpState extends State<SignUp> {
           bottom: MediaQuery.of(context).size.height * 0.015,
           left: MediaQuery.of(context).size.height * 0.01),
       decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
+          border:border,
           borderRadius: BorderRadius.all(Radius.circular(7))),
       child: Row(
         children: [
           Expanded(
             flex: 7,
             child: TextField(
+              onChanged: (value) {
+                onChanged;
+              },
+              controller: controller,
               style: MyText.textStyle(),
               cursorColor: Colors.black,
               cursorHeight: 25,

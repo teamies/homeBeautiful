@@ -14,6 +14,8 @@ import 'package:home_beautiful/screens/SignUp.dart';
 import 'package:home_beautiful/screens/my_cart.dart';
 import 'package:home_beautiful/screens/product_favorites.dart';
 
+import '../models/databseManage.dart';
+
 
 class Product extends StatefulWidget {
   final product products;
@@ -41,6 +43,29 @@ class _ProductState extends State<Product> {
     });
   }
 
+  List<product> listFavorites = [];
+  late String name;
+  late String content;
+  late String image;
+  late num price;
+  late String type;
+  late num quatity;
+  late num star;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    favourite();
+  }
+
+  favourite() async{
+    dynamic res = databaseManage().createProduct(name, content, image, type, price, quatity, star);
+    setState(() {
+      listFavorites = res;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -54,11 +79,11 @@ class _ProductState extends State<Product> {
                 children: [
                   Header(),
                   contents( 
-                    title: this.widget.products.title,
+                    title: this.widget.products.name,
                     price: this.widget.products.price,
-                    rate: 3.0,
+                    rate: this.widget.products.star,
                     sumEvaluate: '(50 reviews)',
-                    content: this.widget.products.infPrp
+                    content: this.widget.products.content
                   ),
                 ],
               ),
@@ -93,7 +118,7 @@ class _ProductState extends State<Product> {
                     image: DecorationImage(
                         alignment: Alignment.centerRight,
                         fit: BoxFit.cover,
-                        image: AssetImage(this.widget.products.image))),
+                        image: NetworkImage(this.widget.products.image))),
               ),
             ),
           ],
@@ -192,7 +217,7 @@ class _ProductState extends State<Product> {
 
   Widget contents(
     {String? title, content,sumEvaluate,
-    double? rate,price}){
+    num? rate,price}){
     return  Container(
         // decoration: BoxDecoration(border: Border.all()),
         padding: EdgeInsets.all(20),
@@ -207,7 +232,7 @@ class _ProductState extends State<Product> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  MyText.baseText(text: '\$ $price\0', size: 30, fontWeight: FontWeight.w600),
+                  MyText.baseText(text: '\$ $price', size: 30, fontWeight: FontWeight.w600),
                   Row(
                     children: [
                       GestureDetector(
@@ -257,14 +282,14 @@ class _ProductState extends State<Product> {
 
             GestureDetector(
               onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => Review()));
+              //  Navigator.push(context, MaterialPageRoute(builder: (context) => Review()));
               },
               child: Row(
                 children: [
                   Icon(Icons.star, color: Colors.yellow),
                   Padding(
                     padding: const EdgeInsets.only(left: 8.0, right: 15),
-                    child: MyText.baseText(text: '$rate'),
+                    child: MyText.baseText(text: rate!.toString()),
                   ),
                   MyText.baseText(text: sumEvaluate)
                 ],
@@ -285,12 +310,13 @@ class _ProductState extends State<Product> {
                     onPressed: () {
                       setState(() {
                         check =! check;
-                        if( check == true){
-                          final item = this.widget.products;
-                          List<favorites> list = [favorites(item.image, item.title, item.price, 1)];
-                          listFavorites.addAll(list);
-                        }
-                        
+                        // final item = this.widget.products;
+                        //   List<favorites> list = [favorites(item.image, item.name, item.price, 1)];
+                        //   listFavorites.addAll(list);
+
+                      //  databaseManage().updateProduct(this.widget.products.id, data)
+
+
                       });
                     },
                     child: Icon(Icons.bookmark_outline, color: check? Colors.white : Color(0xFF909090) ,),
@@ -312,9 +338,9 @@ class _ProductState extends State<Product> {
                     onPressed: () {
                       if( _counter > 0){
                         setState(() {
-                        final item = this.widget.products;
-                          List<myCart> list = [myCart(item.image, item.title, item.price, _counter)];
-                          listMyCart.addAll(list);
+                        // final item = this.widget.products;
+                        //   List<myCart> list = [myCart(item.image, item.title, item.price, _counter)];
+                        //   listMyCart.addAll(list);
                       });
                       notification.onAdd(context);
                       Navigator.push(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:home_beautiful/components/mytext.dart';
 import 'package:home_beautiful/components/notification.dart';
+import 'package:home_beautiful/models/databseManage.dart';
 import 'package:home_beautiful/models/myCart.dart';
 import 'package:home_beautiful/models/product.dart';
 import 'package:home_beautiful/screens/my_cart.dart';
@@ -18,6 +19,7 @@ class product_favorites extends StatefulWidget {
 
 class _product_favoritesState extends State<product_favorites> {
 
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -28,15 +30,15 @@ class _product_favoritesState extends State<product_favorites> {
             child: Column(
               children: [
                titleBar('Favorites'),
-                Expanded(
-                    child: ListView.builder(
-                      itemCount: listFavorites.length,
-                      itemBuilder: (context, index){
-                        final item = listFavorites[index];
-                       return productFavorites(item, index);
-
-                      },
-                    )),
+                // Expanded(
+                //     child: ListView.builder(
+                //       itemCount: listFavorites.length,
+                //       itemBuilder: (context, index){
+                //         final item = listFavorites[index];
+                //        return productFavorites(item, index);
+                //
+                //       },
+                //     )),
 
                 SizedBox(
                   width: double.infinity,
@@ -47,11 +49,11 @@ class _product_favoritesState extends State<product_favorites> {
                     ),
                       onPressed: (){
                       setState(() {
-                        for(int i=0;i<listFavorites.length;i++){
-                          final item = listFavorites[i];
-                          List<myCart> list = [myCart(item.image, item.title, item.price, item.quantity)];
-                          listMyCart.addAll(list);
-                        }
+                        // for(int i=0;i<listFavorites.length;i++){
+                        //   final item = listFavorites[i];
+                        //   List<myCart> list = [myCart(item.image, item.title, item.price, item.quantity)];
+                        //   listMyCart.addAll(list);
+                        // }
                       });
                       notification.onAdd(context);
                       //Navigator.push(context, SwipeablePageRoute(builder: (context) => my_cart()));
@@ -108,7 +110,7 @@ class _product_favoritesState extends State<product_favorites> {
                     GestureDetector(
                         onTap: (){
                           setState(() {
-                            listFavorites.removeAt(index);
+                        //    listFavorites.removeAt(index);
                             notification.onDelete(context);
                           });
                         },
