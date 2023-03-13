@@ -17,7 +17,6 @@ class _buttonBarState extends State<buttonBar> {
   
   List tap = [Home(), product_favorites(), notification(), profile()];
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

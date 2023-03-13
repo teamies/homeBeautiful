@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:home_beautiful/components/buttonBar.dart';
+import 'package:home_beautiful/screens/Boarding.dart';
 import 'package:home_beautiful/screens/LogIn.dart';
 import 'package:home_beautiful/screens/SignUp.dart';
 import 'firebase_options.dart';
@@ -20,8 +21,10 @@ class MyApp extends StatelessWidget {
       home:
       home(),
        routes: <String, WidgetBuilder> {
+      '/Boarding': (context) => Boarding(),
       '/signUp': (context) => SignUp(),
-      '/logIn': (context) => LogIn(),
+      '/logIn': (context) => LogIn(title: 'WELCOME'),
+      '/logIn2': (context) => LogIn(title: 'WELCOME BACK'),
       '/buttonBar': (context) => buttonBar(selectedIndex: 0,),
     },
     );

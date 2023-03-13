@@ -5,6 +5,7 @@ import 'package:home_beautiful/components/mytext.dart';
 import 'package:home_beautiful/core/_config.dart';
 import 'package:home_beautiful/screens/LogIn.dart';
 import 'package:home_beautiful/screens/SignUp.dart';
+import 'package:home_beautiful/screens/treeScreen.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:swipeable_page_route/swipeable_page_route.dart';
 
@@ -18,6 +19,11 @@ class Boarding extends StatelessWidget {
     Colors.red,
   ];
 
+  void _handleSignUp(BuildContext context) {
+    // Navigator.pushNamedAndRemoveUntil( context, "/signUp", (r) => false);
+    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> treeScreen()), (r) => false);
+
+}
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,7 +34,6 @@ class Boarding extends StatelessWidget {
                 fit: BoxFit.cover,
                 image: AssetImage("assets/img/Boarding.png"))),
         child: Column(
-          // mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Container(
               padding: EdgeInsets.only(top: 30, bottom: 30, right: 10),
@@ -56,27 +61,11 @@ class Boarding extends StatelessWidget {
                 ),
               ),
             ),
-            // Expanded(
-            //   child: Container(
-            //     child: MyText.baseText(
-            //       text:
-            //           'The best simple place where you discover most wonderful furniture and make you home beautiful',
-            //       color: colorGray,
-            //     ),
-            //   ),
-            // ),
             Container(
               width: MediaQuery.of(context).size.width,
               child: TextButton(
                 onPressed: (() {
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, "/signUp", (r) => false);
-                  // Navigator.push(
-                  //     context,
-                  //     PageTransition(
-                  //         duration: Duration(milliseconds: 650),
-                  //         type: PageTransitionType.rightToLeft,
-                  //         child: SignUp()));
+                  _handleSignUp(context);
                 }),
                 style: TextButton.styleFrom(
                     backgroundColor: Color(0xff242424),
@@ -91,9 +80,9 @@ class Boarding extends StatelessWidget {
                     ),
                   ],
                   isRepeatingAnimation: true,
-                  // onTap: () {
-                  //   print("Tap Event");
-                  // },
+                  onTap: () {
+                    _handleSignUp(context);
+                  },
                 ),
               ),
             ),

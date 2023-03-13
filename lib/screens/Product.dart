@@ -12,6 +12,7 @@ import 'package:home_beautiful/models/cart.dart';
 import 'package:home_beautiful/models/product.dart';
 import 'package:home_beautiful/screens/Home.dart';
 import 'package:home_beautiful/screens/Review.dart';
+import 'package:home_beautiful/screens/SignUp.dart';
 import 'package:home_beautiful/screens/my_cart.dart';
 import 'package:home_beautiful/screens/product_favorites.dart';
 
