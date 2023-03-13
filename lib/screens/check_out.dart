@@ -9,7 +9,7 @@ import '../core/_config.dart';
 
 class check_out extends StatefulWidget {
   const check_out({super.key, required this.SumPrice});
-  final double SumPrice;
+  final num SumPrice;
   @override
   State<check_out> createState() => _check_outState();
 }
@@ -177,7 +177,7 @@ class _check_outState extends State<check_out> {
     );
   }
 
-  Widget price(String text, double price, FontWeight bold) {
+  Widget price(String text, num price, FontWeight bold) {
     return Padding(
       padding: const EdgeInsets.only(left: 8, right: 8, top: 4),
       child: Container(

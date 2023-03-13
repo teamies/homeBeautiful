@@ -1,13 +1,16 @@
-import 'dart:ffi';
+
+import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:home_beautiful/components/notification.dart';
 import 'package:home_beautiful/components/titleBar.dart';
+import 'package:home_beautiful/models/databaseManage.dart';
 import 'package:home_beautiful/screens/check_out.dart';
 import 'package:swipeable_page_route/swipeable_page_route.dart';
 
 import '../components/mytext.dart';
-import '../models/myCart.dart';
+import '../models/cart.dart';
+
 
 class my_cart extends StatefulWidget {
   const my_cart({Key? key}) : super(key: key);
@@ -17,22 +20,26 @@ class my_cart extends StatefulWidget {
 }
 
 class _my_cartState extends State<my_cart> {
-  double SumPrice =0;
-
-  void sum(){
-    setState(() {
-      SumPrice= listMyCart.fold(0, (previousValue, element) => previousValue + (element.price * element.quantity));
-    });
-  }
-
-
+   num SumPrice = 0;
+  List<cart> listMyCart = [];
+  StreamSubscription<List<cart>>? streamSubscription;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    sum();
+   streamSubscription = databaseManage().getCart().listen((event) {
+     setState(() {
+       listMyCart = event;
+       SumPrice = sum();
+     });
+   });
   }
 
+
+  num sum(){
+    return
+      SumPrice = listMyCart.fold(0, (previousValue, element) => previousValue + (element.price! * element.quantity));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,20 +77,32 @@ class _my_cartState extends State<my_cart> {
                         child: Column(
                           children: [
                             Expanded(
-                              child: ListView.builder(
-                                itemCount: listMyCart.length,
-                                itemBuilder: (context, index){
-                                  final item = listMyCart[index];
-
-                                  return productMyCart(item, index);
+                              child:
+                              StreamBuilder(
+                                stream: databaseManage().getCart(),
+                                builder: (context, snapshot){
+                                  if(snapshot.hasData){
+                                    return ListView.builder(
+                                      itemCount: snapshot.data!.length,
+                                      itemBuilder: (context, index){
+                                        final item = snapshot.data![index];
+                                        return productMyCart(item, index);
+                                      },
+                                    );
+                                  }
+                                  else{
+                                    return const Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  }
                                 },
-                              ),
+                              )
                             ),
                             Padding(
                               padding:  EdgeInsets.only(top: MediaQuery.of(context).size.height*0.01, bottom: MediaQuery.of(context).size.height*0.01),
                               child: Row(
                                 children: [
-                                  Expanded(
+                                const  Expanded(
                                     child: Card(
                                         child: TextField(
                                           decoration: InputDecoration(
@@ -131,7 +150,7 @@ class _my_cartState extends State<my_cart> {
                                     }
                                     else {
                                       ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(content: Text('Vui lòng thêm sản phẩm vào giỏ hàng'),
+                                        const SnackBar(content: Text('Vui lòng thêm sản phẩm vào giỏ hàng'),
                                         duration: Duration(seconds: 1),)
                                       );
                                     }
@@ -160,25 +179,28 @@ class _my_cartState extends State<my_cart> {
                   Container(
                     width: 100,
                     height: 100,
-                    child: ClipRRect(
-                        borderRadius: BorderRadius.circular(15),
-                        child: Align(
-                            alignment: Alignment.topCenter,
-                            child: Image.asset(item.image,width: 100, height: 100, fit: BoxFit.cover,))),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      image: DecorationImage(
+                        alignment: Alignment.center,
+                        fit: BoxFit.cover,
+                        image: NetworkImage(item.image)
+                      )
+                    ),
                   ),
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 15, top: 4),
+                      padding:  EdgeInsets.only(left: MediaQuery.of(context).size.width*0.09, top: 4),
                       child: SizedBox(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            MyText.baseText(text: item.title),
+                            MyText.baseText(text: item.name),
                             Expanded(
                               child: Padding(
                                 padding: const EdgeInsets.only(top: 5),
                                 child: MyText.baseText(
-                                    text: '\$ ${item.price}\0',
+                                    text: '\$ ${item.price}',
                                     fontWeight: FontWeight.bold),
                               ),
                             ),
@@ -187,8 +209,13 @@ class _my_cartState extends State<my_cart> {
                                 GestureDetector(
                                   onTap: (){
                                     setState(() {
-                                      item.quantity++;
+                                      item.quantity ++;
                                       sum();
+                                      Map<String, dynamic> data = {
+                                        'idProduct': item.idProduct,
+                                        'quantity': item.quantity
+                                      };
+                                      databaseManage().updateCart(item.id.toString(), data);
                                     });
                                   },
                                   child: Container(
@@ -206,7 +233,6 @@ class _my_cartState extends State<my_cart> {
                                   child:  SizedBox(
                                     width: 30,
                                     height: 30,
-
                                     child: Center(child: MyText.baseText(text: item.quantity.toString(), size: 18, fontWeight: FontWeight.bold)),
                                   ),
                                 ),
@@ -214,8 +240,14 @@ class _my_cartState extends State<my_cart> {
                                   onTap: (){
                                     setState(() {
                                       if(item.quantity > 1){
-                                        item.quantity--;
+                                        item.quantity --;
                                         sum();
+                                        Map<String, dynamic> data = {
+                                          'idProduct': item.idProduct,
+                                          'quantity': item.quantity
+                                        };
+                                        databaseManage().updateCart(item.id.toString(), data);
+
                                       }
                                     });
                                   },
@@ -239,6 +271,7 @@ class _my_cartState extends State<my_cart> {
                   GestureDetector(
                       onTap: (){
                         setState(() {
+                          databaseManage().deleteCart(item.id);
                           listMyCart.removeAt(index);
                           sum();
                           notification.onDelete(context);
