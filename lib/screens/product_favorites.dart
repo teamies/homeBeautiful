@@ -1,14 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:home_beautiful/components/mytext.dart';
 import 'package:home_beautiful/components/notification.dart';
-import 'package:home_beautiful/models/databseManage.dart';
-import 'package:home_beautiful/models/myCart.dart';
+import 'package:home_beautiful/models/databaseManage.dart';
+import 'package:home_beautiful/models/cart.dart';
 import 'package:home_beautiful/models/product.dart';
-import 'package:home_beautiful/screens/my_cart.dart';
-import 'package:swipeable_page_route/swipeable_page_route.dart';
 
 import '../components/titleBar.dart';
-import '../models/favorites.dart';
 
 class product_favorites extends StatefulWidget {
   const product_favorites({Key? key}) : super(key: key);
@@ -18,7 +17,26 @@ class product_favorites extends StatefulWidget {
 }
 
 class _product_favoritesState extends State<product_favorites> {
+  List<product> listProduct = [];
+  List<cart> listCart = [];
+  StreamSubscription<List<product>>? streamSubscriptionProduct;
+  StreamSubscription<List<cart>>? streamSubscriptionCart;
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    streamSubscriptionProduct = databaseManage().getProduct().listen((event) {
+      setState(() {
+        listProduct = event;
+      });
+    });
+    streamSubscriptionCart = databaseManage().getCart().listen((event) {
+      setState(() {
+        listCart = event;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,37 +44,54 @@ class _product_favoritesState extends State<product_favorites> {
       home: Scaffold(
         body: SafeArea(
           child: Padding(
-            padding: EdgeInsets.all(MediaQuery.of(context).size.height*0.02),
+            padding: EdgeInsets.all(MediaQuery.of(context).size.height * 0.02),
             child: Column(
               children: [
-               titleBar('Favorites'),
-                // Expanded(
-                //     child: ListView.builder(
-                //       itemCount: listFavorites.length,
-                //       itemBuilder: (context, index){
-                //         final item = listFavorites[index];
-                //        return productFavorites(item, index);
-                //
-                //       },
-                //     )),
-
+                titleBar('Favorites'),
+                Expanded(
+                    child:
+                    StreamBuilder(
+                      stream: databaseManage().getProduct(),
+                      builder: (context, snapshot){
+                        if(snapshot.hasData){
+                         return ListView.builder(
+                            itemCount: snapshot.data?.length,
+                            itemBuilder: (context, index) {
+                              final item = snapshot.data![index];
+                              if (item.favorite == true) {
+                                return productFavorites(item, index);
+                              } else {
+                                return Container();
+                              }
+                            },
+                          );
+                        }
+                        else {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                      },
+                    )
+                ),
                 SizedBox(
                   width: double.infinity,
                   height: 50,
                   child: ElevatedButton(
-                    style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(Colors.black),
-                    ),
-                      onPressed: (){
-                      setState(() {
-                        // for(int i=0;i<listFavorites.length;i++){
-                        //   final item = listFavorites[i];
-                        //   List<myCart> list = [myCart(item.image, item.title, item.price, item.quantity)];
-                        //   listMyCart.addAll(list);
-                        // }
-                      });
-                      notification.onAdd(context);
-                      //Navigator.push(context, SwipeablePageRoute(builder: (context) => my_cart()));
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.black),
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          // for(int i=0;i<listFavorites.length;i++){
+                          //   final item = listFavorites[i];
+                          //   List<myCart> list = [myCart(item.image, item.title, item.price, item.quantity)];
+                          //   listMyCart.addAll(list);
+                          // }
+                        });
+                        notification.onAdd(context);
+                        //Navigator.push(context, SwipeablePageRoute(builder: (context) => my_cart()));
                       },
                       child: const Text('Add all to my cart')),
                 )
@@ -68,36 +103,40 @@ class _product_favoritesState extends State<product_favorites> {
     );
   }
 
-  Widget productFavorites(final item, int index){
+  Widget productFavorites(final item, int index) {
     return Padding(
-      padding:  EdgeInsets.only(bottom: 19),
+      padding: EdgeInsets.only(bottom: 19),
       child: Column(
         children: [
           Container(
-            height:100,
+            height: 100,
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
                   width: 100,
                   height: 100,
-                  child: ClipRRect(
-                      borderRadius: BorderRadius.circular(15),
-                      child: Align(
-                          alignment: Alignment.topCenter,
-                          child: Image.asset(item.image,width: 100, height: 100, fit: BoxFit.cover,))),
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),
+                    image: DecorationImage(
+                      alignment: Alignment.center,
+                      fit: BoxFit.cover,
+                      image: NetworkImage(item.image)
+                    )
+                  ),
                 ),
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.only(left:15, top: 4),
+                    padding: const EdgeInsets.only(left: 15, top: 4),
                     child: SizedBox(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          MyText.baseText(text:item.title),
+                          MyText.baseText(text: item.name),
                           Padding(
                             padding: const EdgeInsets.only(top: 5),
-                            child: MyText.baseText(text: '\$ ${item.price}\0', fontWeight: FontWeight.bold),
+                            child: MyText.baseText(
+                                text: '\$ ${item.price}',
+                                fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),
@@ -108,20 +147,57 @@ class _product_favoritesState extends State<product_favorites> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     GestureDetector(
-                        onTap: (){
+                        onTap: () {
                           setState(() {
-                        //    listFavorites.removeAt(index);
-                            notification.onDelete(context);
+                            bool check = false;
+                            Map<String, dynamic> data = {
+                              'content': item.content,
+                              'price': item.price,
+                              'type': item.type,
+                              'star': item.star,
+                              'quantity': item.quantity,
+                              'image': item.image,
+                              'name': item.name,
+                              'favorite': check
+                            };
+                            databaseManage()
+                                .updateProduct(item.idProduct, data);
+                               listProduct.removeAt(index);
+                               notification.onDelete(context);
                           });
                         },
-                        child:
-                        Icon(Icons.cancel_outlined)),
-
+                        child: Icon(Icons.cancel_outlined)),
                     GestureDetector(
-                      onTap: (){
+                      onTap: () {
                         setState(() {
-                          List<myCart>  list= [myCart(item.image, item.title, item.price, 1)];
-                          listMyCart.addAll(list);
+                          bool check = false;
+                          if(listCart.length <= 1 )
+                          {
+                            databaseManage().createCart(cart(
+                                idProduct: item.idProduct.toString(),
+                                quantity: 1));
+                          }
+                          else{
+                            for (int i = 0; i < listCart.length; i++) {
+                              if (item.idProduct == listCart[i].idProduct) {
+                                Map<String, dynamic> data = {
+                                  'idProduct': listCart[i].idProduct,
+                                  'quantity': listCart[i].quantity + 1
+                                };
+                                databaseManage()
+                                    .updateCart(listCart[i].id.toString(), data);
+                                check = true;
+                                break;
+                              }
+
+                            }
+                            if(!check){
+                              databaseManage().createCart(cart(
+                                  idProduct: item.idProduct.toString(),
+                                  quantity: 1));
+                            }
+                          }
+
                           notification.onAdd(context);
                         });
                       },
@@ -130,36 +206,26 @@ class _product_favoritesState extends State<product_favorites> {
                         height: 30,
                         decoration: BoxDecoration(
                             color: Color(0xffE0E0E0),
-                            borderRadius: BorderRadius.circular(4)
-                        ),
+                            borderRadius: BorderRadius.circular(4)),
                         child: Center(
                           child: Icon(Icons.shopping_bag),
                         ),
                       ),
                     ),
-
-
                   ],
                 )
               ],
             ),
           ),
-          Padding(padding: EdgeInsets.only(top: 19),
+          Padding(
+            padding: EdgeInsets.only(top: 19),
             child: Container(
               decoration: BoxDecoration(
-                  border: Border(
-                      bottom: BorderSide(
-                          color: Colors.grey
-                      )
-                  )
-              ),
+                  border: Border(bottom: BorderSide(color: Colors.grey))),
             ),
           )
         ],
       ),
     );
-
   }
-
 }
-

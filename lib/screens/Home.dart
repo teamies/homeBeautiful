@@ -1,15 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:home_beautiful/components/mytext.dart';
 import 'package:home_beautiful/core/_config.dart';
-import 'package:home_beautiful/models/databseManage.dart';
+import 'package:home_beautiful/models/databaseManage.dart';
 import 'package:home_beautiful/models/product.dart';
 import 'package:home_beautiful/screens/Product.dart';
 import 'package:home_beautiful/screens/my_cart.dart';
-
-import '../models/product.dart';
-import '../models/product.dart';
-import '../models/product.dart';
-import '../models/product.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -36,24 +33,18 @@ class _HomeState extends State<Home> {
   String productType = 'Popular';
 
   List<product> listProduct = [];
+  StreamSubscription<List<product>>? streamSubscription;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    products();
-  }
-
-  products() async{
-    dynamic res = await databaseManage().getProduct();
-    if(res != null){
+    streamSubscription = databaseManage().getProduct().listen((event) {
       setState(() {
-        listProduct = res;
+        listProduct = event;
       });
-    }
+    });
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -70,29 +61,44 @@ class _HomeState extends State<Home> {
                     child: Container(
                       margin: EdgeInsets.only(top: 10),
                         // height: MediaQuery.of(context).size.height * 0.67,
-                        child: GridView.count(
-                          padding: EdgeInsets.only(top: 10, bottom: 20),
-                            crossAxisCount: 2,
-                            childAspectRatio: 0.58,
-                            crossAxisSpacing: 15.0,
-                            mainAxisSpacing: 15.0,
-                            children: 
-                              List.generate(listProduct.length, (index) {
-                                return Center(
-                                  child:GestureDetector(
-                                    onTap: (){
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) =>Product(products: listProduct[index])));
-                                    },
-                                    child: contentProduct(
-                                      img: listProduct[index].image,
-                                      lable: listProduct[index].name,
-                                      price: listProduct[index].price
-                                    ),
-                                  )
-                                );
-                              }
-                          )
-                        ) 
+                        child:
+                       StreamBuilder(
+                         stream: databaseManage().getProduct(),
+                         builder: (context, snapshot){
+                           if(snapshot.hasData){
+                             return
+                               GridView.count(
+                                 padding: EdgeInsets.only(top: 10, bottom: 20),
+                                 crossAxisCount: 2,
+                                 childAspectRatio: 0.58,
+                                 crossAxisSpacing: 15.0,
+                                 mainAxisSpacing: 15.0,
+                                 children:
+                                 List.generate(listProduct.length, (index) {
+                                   return Center(
+                                       child:GestureDetector(
+                                         onTap: (){
+                                           Navigator.push(context, MaterialPageRoute(builder: (context) =>Product(products: listProduct[index])));
+                                         },
+                                         child: contentProduct(
+                                             img: listProduct[index].image,
+                                             lable: listProduct[index].name,
+                                             price: listProduct[index].price
+                                         ),
+                                       )
+                                   );
+                                 }
+                                 )
+                             );
+                           }
+                           else
+                             {
+                               return const Center(
+                                 child: CircularProgressIndicator(),
+                               );
+                             }
+                         },
+                       )
                       ),
                   )
                 ],
@@ -303,14 +309,19 @@ class _HomeState extends State<Home> {
                 children: [
                   Container(
                     width: MediaQuery.of(context).size.width*0.5,
-                    // decoration: BoxDecoration(
-                    //   border: Border.all(),
-                    //   borderRadius: BorderRadius.circular(25)),
-                    // child: Text('data'),
-                    child: ClipRRect(
+                    height: MediaQuery.of(context).size.height* 0.45,
+                    decoration: BoxDecoration(
+                    //  border: Border.all(),
                       borderRadius: BorderRadius.circular(10),
-                      child: Image.network(img!)
-                    )
+                        image: DecorationImage(
+                            alignment: Alignment.center,
+                            fit: BoxFit.cover,
+                            image: NetworkImage(img!))
+                    ),
+                    // child: ClipRRect(
+                    //   borderRadius: BorderRadius.circular(10),
+                    //   child:  Image.network(img!),
+                    // )
                   ),
                   GestureDetector(
                     onTap: (){

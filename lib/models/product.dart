@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class product{
-  String? id;
+  String? idProduct;
   String content;
   String image;
   String name;
@@ -9,10 +9,10 @@ class product{
   num quantity;
   String type;
   num star;
-  String favorite;
+  bool favorite;
 
   product(
-      {this.id,
+      {this.idProduct,
         required this.content,
         required this.image,
         required this.name,
@@ -27,7 +27,7 @@ class product{
   {
     Map data = doc.data() as Map<String, dynamic>;
     return product(
-        id: doc.id,
+        idProduct: doc.id,
         content : data['content'],
         price : data['price'],
         image : data['image'],
@@ -39,19 +39,19 @@ class product{
     );
   }
 
-  Map<String, dynamic> toFirestore() {
-    return {
-      'id': id,
-      'name':name,
-      'content':content,
-      'price': price,
-      'image': image,
-      'quantity': quantity,
-      'type': type,
-      'star': star,
-      'favorite': favorite,
-    };
-  }
+  // Map<String, dynamic> toFirestore() {
+  //   return {
+  //     'id': idProduct,
+  //     'name':name,
+  //     'content':content,
+  //     'price': price,
+  //     'image': image,
+  //     'quantity': quantity,
+  //     'type': type,
+  //     'star': star,
+  //     'favorite': favorite,
+  //   };
+  // }
 }
 
 

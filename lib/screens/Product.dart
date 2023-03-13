@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:home_beautiful/components/buttonBar.dart';
@@ -6,14 +8,14 @@ import 'package:home_beautiful/components/mytext.dart';
 import 'package:home_beautiful/components/notification.dart';
 import 'package:home_beautiful/core/_config.dart';
 import 'package:home_beautiful/models/favorites.dart';
-import 'package:home_beautiful/models/myCart.dart';
+import 'package:home_beautiful/models/cart.dart';
 import 'package:home_beautiful/models/product.dart';
 import 'package:home_beautiful/screens/Home.dart';
 import 'package:home_beautiful/screens/Review.dart';
 import 'package:home_beautiful/screens/my_cart.dart';
 import 'package:home_beautiful/screens/product_favorites.dart';
 
-import '../models/databseManage.dart';
+import '../models/databaseManage.dart';
 
 
 class Product extends StatefulWidget {
@@ -25,11 +27,10 @@ class Product extends StatefulWidget {
 }
 
 class _ProductState extends State<Product> {
-  bool check = true;
   bool checkcolorWhite = true;
   bool checkcolorBrown = false;
   bool checkcolorNude = false;
-  int _counter = 0;
+  num _counter = 1;
 
   void _incrementCounter() {
     setState(() {
@@ -38,11 +39,12 @@ class _ProductState extends State<Product> {
   }
   void _decreasecounter() {
     setState(() {
-      _counter >0 ? _counter-- : _counter;
+      _counter >1 ? _counter-- : _counter;
     });
   }
 
-  List<product> listFavorites = [];
+  List<cart> listCart = [];
+  StreamSubscription<List<cart>>? streamSubscription;
   late String name;
   late String content;
   late String image;
@@ -55,15 +57,13 @@ class _ProductState extends State<Product> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    favourite();
-  }
-
-  favourite() async{
-    dynamic res = databaseManage().createProduct(name, content, image, type, price, quatity, star);
-    setState(() {
-      listFavorites = res;
+    streamSubscription = databaseManage().getCart().listen((event) {
+      setState(() {
+        listCart = event;
+      });
     });
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -307,20 +307,26 @@ class _ProductState extends State<Product> {
                   flex: 1,
                   child: TextButton(
                     onPressed: () {
+
                       setState(() {
-                        check =! check;
-                        // final item = this.widget.products;
-                        //   List<favorites> list = [favorites(item.image, item.name, item.price, 1)];
-                        //   listFavorites.addAll(list);
 
-                      //  databaseManage().updateProduct(this.widget.products.id, data)
-
+                        this.widget.products.favorite =! this.widget.products.favorite;
+                        Map<String, dynamic> data ={
+                          'content': this.widget.products.content,
+                          'price': this.widget.products.price,
+                          'type': this.widget.products.type,
+                          'star': this.widget.products.star,
+                          'quantity': this.widget.products.quantity,
+                          'image': this.widget.products.image,
+                          'name': this.widget.products.name,
+                          'favorite': this.widget.products.favorite};
+                        databaseManage().updateProduct(this.widget.products.idProduct.toString(), data);
 
                       });
                     },
-                    child: Icon(Icons.bookmark_outline, color: check? Color(0xFF909090) : Colors.white,),
+                    child: Icon(Icons.bookmark_outline, color: this.widget.products.favorite == true ? Colors.white : Color(0xFF909090)),
                     style: TextButton.styleFrom(
-                      backgroundColor: check? Color(0xFFE0E0E0) : Colors.black,
+                      backgroundColor: this.widget.products.favorite == true ? Colors.black: Color(0xFFE0E0E0),
                       padding: EdgeInsets.only(top: 15, bottom: 15),
                       shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(8))),
@@ -334,26 +340,49 @@ class _ProductState extends State<Product> {
                 Expanded(
                   flex: 5,
                   child: TextButton(
-                    onPressed: () {
-                      if( _counter > 0){
+                      onPressed: () {
                         setState(() {
-                        // final item = this.widget.products;
-                        //   List<myCart> list = [myCart(item.image, item.title, item.price, _counter)];
-                        //   listMyCart.addAll(list);
-                      });
-                      notification.onAdd(context);
-                      Navigator.push(
-                        context, MaterialPageRoute(builder: (context) => my_cart()));
-                      }
-                      
-                    },
-                    child: MyText.baseText(text: 'Add to cart', color: colorWhite),
+                          bool check = false;
+                          if(listCart.length <= 1 )
+                          {
+                            databaseManage().createCart(cart(
+                                idProduct: this.widget.products.idProduct.toString(),
+                                quantity: 1));
+                          }
+                          else{
+                            for (int i = 0; i < listCart.length; i++) {
+                              if (this.widget.products.idProduct == listCart[i].idProduct) {
+                                Map<String, dynamic> data = {
+                                  'idProduct': listCart[i].idProduct,
+                                  'quantity': listCart[i].quantity + 1
+                                };
+                                databaseManage()
+                                    .updateCart(listCart[i].id.toString(), data);
+                                check = true;
+                                break;
+                              }
+
+                            }
+                            if(!check){
+                              databaseManage().createCart(cart(
+                                  idProduct: this.widget.products.idProduct.toString(),
+                                  quantity: 1));
+                            }
+                          }
+
+
+
+                          notification.onAdd(context);
+                        });
+                      },
                     style: TextButton.styleFrom(
                       backgroundColor: Color(0xff242424),
                       padding: EdgeInsets.only(top: 15, bottom: 15),
                       shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(8))),
                     ),
+
+    child: MyText.baseText(text: 'Add to cart', color: colorWhite),
                   ),
                 ),
               ],
