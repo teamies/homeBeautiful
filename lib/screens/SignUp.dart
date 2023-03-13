@@ -49,7 +49,7 @@ class _SignUpState extends State<SignUp> {
   }
   
   
-  bool check = true;
+  bool check = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -125,10 +125,13 @@ class _SignUpState extends State<SignUp> {
               // _entryField(labelText: 'Confirm Password', obscureText: false, controller: _controllerConfirmPassword, border: (_controllerConfirmPassword.text == _controllerPassword.text) ? Border.all(color: Colors.grey) : Border.all(color: Colors.red)),
               GestureDetector(
                 child: 
-              _entryField(labelText: 'Confirm Password', obscureText: false, controller: _controllerConfirmPassword, border: (check == true) ? Border.all(color: Colors.grey) : Border.all(color: Colors.red)),
+              _entryField(labelText: 'Confirm Password', obscureText: false, controller: _controllerConfirmPassword, border: (check) ? Border.all(color: Colors.grey) : Border.all(color: Colors.red)),
               onTap: () {
-                check =! check;
-              (_controllerConfirmPassword == _controllerPassword) ? check = true : check = false;
+                setState(() {
+                  check =! check;
+                  (_controllerConfirmPassword.text == _controllerPassword.text) ? check = true : check = false;
+                });
+                
               },
               ),
               Container(
