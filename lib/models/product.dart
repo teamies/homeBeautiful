@@ -23,7 +23,7 @@ class product{
         required this.favorite
       });
 
-  factory product.fromFirestore(DocumentSnapshot doc)
+  factory product.fromJson(DocumentSnapshot doc)
   {
     Map data = doc.data() as Map<String, dynamic>;
     return product(
@@ -39,19 +39,6 @@ class product{
     );
   }
 
-  // Map<String, dynamic> toFirestore() {
-  //   return {
-  //     'id': idProduct,
-  //     'name':name,
-  //     'content':content,
-  //     'price': price,
-  //     'image': image,
-  //     'quantity': quantity,
-  //     'type': type,
-  //     'star': star,
-  //     'favorite': favorite,
-  //   };
-  // }
 }
 
 

@@ -10,7 +10,7 @@ class cart{
   num quantity;
   cart({ this.id, required this.idProduct, this.name, this.price,  this.image, required this.quantity});
 
-  factory cart.fromFirestore(DocumentSnapshot doc ) {
+  factory cart.fromJson(DocumentSnapshot doc ) {
     Map data = doc.data() as Map<String, dynamic>;
     return cart(
         id: doc.id,

@@ -42,8 +42,10 @@ class _HomeState extends State<Home> {
     streamSubscription = databaseManage().getProduct().listen((event) {
       setState(() {
         listProduct = event;
+
       });
     });
+
   }
 
   @override
@@ -318,10 +320,7 @@ class _HomeState extends State<Home> {
                             fit: BoxFit.cover,
                             image: NetworkImage(img!))
                     ),
-                    // child: ClipRRect(
-                    //   borderRadius: BorderRadius.circular(10),
-                    //   child:  Image.network(img!),
-                    // )
+
                   ),
                   GestureDetector(
                     onTap: (){
@@ -330,14 +329,14 @@ class _HomeState extends State<Home> {
                     child: Container(
                       width: 30,
                       height: 30,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(5)),
                         color: Color(0xFFE0E0E0),
                         ),
                       
-                      margin: EdgeInsets.only(bottom: 15, right: 15),
+                      margin: const EdgeInsets.only(bottom: 15, right: 15),
                       alignment: Alignment.center,
-                      child: Icon(Icons.shopping_bag_outlined, size: 20,),
+                      child: const Icon(Icons.shopping_bag_outlined, size: 20,),
                     ),
                   )
                 ],

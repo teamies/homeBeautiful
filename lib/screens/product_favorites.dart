@@ -84,11 +84,43 @@ class _product_favoritesState extends State<product_favorites> {
                       ),
                       onPressed: () {
                         setState(() {
-                          // for(int i=0;i<listFavorites.length;i++){
-                          //   final item = listFavorites[i];
-                          //   List<myCart> list = [myCart(item.image, item.title, item.price, item.quantity)];
-                          //   listMyCart.addAll(list);
-                          // }
+                          setState(() {
+                            bool check = false;
+                            for(int j =0; j<listProduct.length; j++){
+                              final item = listProduct[j];
+                              if(item.favorite == true){
+                                if(listCart.length <= 1 )
+                                {
+                                  databaseManage().createCart(cart(
+                                      idProduct: item.idProduct.toString(),
+                                      quantity: 1));
+                                }
+                                else{
+                                  for (int i = 0; i < listCart.length; i++) {
+                                    if (item.idProduct == listCart[i].idProduct) {
+                                      Map<String, dynamic> data = {
+                                        'idProduct': listCart[i].idProduct,
+                                        'quantity': listCart[i].quantity + 1
+                                      };
+                                      databaseManage()
+                                          .updateCart(listCart[i].id.toString(), data);
+                                      check = true;
+                                      break;
+                                    }
+
+                                  }
+                                  if(!check){
+                                    databaseManage().createCart(cart(
+                                        idProduct: item.idProduct.toString(),
+                                        quantity: 1));
+                                  }
+                                }
+
+                                notification.onAdd(context);
+                              }
+
+                            }
+                          });
                         });
                         notification.onAdd(context);
                         //Navigator.push(context, SwipeablePageRoute(builder: (context) => my_cart()));
