@@ -1,14 +1,22 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:home_beautiful/models/user.dart';
 
 class Auth {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
+  final user = FirebaseAuth.instance.currentUser;
+
+  final CollectionReference userCollection =
+      FirebaseFirestore.instance.collection("user");
 
   User? get currentUser => _firebaseAuth.currentUser;
 
   Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
 
+
+  //sign in account
   Future<void> signInWithEmailAndPassword({
     required String email,
     required String password,
@@ -16,7 +24,7 @@ class Auth {
     await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
   }
 
-
+  // create user
   Future<void> createUserWithEmailAndPassword({
     required String email,
     required String password,
@@ -25,9 +33,7 @@ class Auth {
   }
 
 
-  final CollectionReference userCollection =
-      FirebaseFirestore.instance.collection("user");
-
+ 
   // saving the userdata
   Future savingUserData({ required String name, required String password, required String ConfirmPassword, required String email}) async {
     return await userCollection.doc(email).set({
@@ -47,7 +53,33 @@ class Auth {
     return snapshot;
   }
 
+
+  //update password
+   updatePassword({ required String uid, required String password, required String ConfirmPassword}) async {
+    try {
+        await FirebaseFirestore.instance.collection('user').doc(uid).update({'password': password, 'ConfirmPassword' : ConfirmPassword});
+        print("Mật khẩu đã được thay đổi thành công");
+    } catch (e) {
+        print(e);
+        print("Lỗi khi cập nhật mật khẩu: $e");
+    }
+  }
+
+  Future<DocumentSnapshot<Map<String, dynamic>>> getUserData(String userId) async {
+    final docRef = FirebaseFirestore.instance.collection('users').doc(userId);
+    final docSnapshot = await docRef.get();
+    return docSnapshot;
+  }
+  
+  Stream<List<Users>> getUser() {
+    return userCollection.snapshots().map((querySnapshot) {
+      return querySnapshot.docs.map((doc) => Users.fromFirestore(doc)).toList();
+    });
+  }
+  // log out
   Future<void> signOut() async {
     await _firebaseAuth.signOut();
   }
+
+
 }

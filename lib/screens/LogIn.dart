@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +7,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:home_beautiful/models/auth_service.dart';
+import 'package:home_beautiful/models/user.dart';
+import 'package:home_beautiful/screens/ForgotPassword.dart';
 import 'package:home_beautiful/screens/Home.dart';
 import 'package:swipeable_page_route/swipeable_page_route.dart';
 
@@ -22,6 +26,19 @@ class LogIn extends StatefulWidget {
 }
 
 class _LogInState extends State<LogIn> {
+  List<Users> listUser = [];
+  StreamSubscription<List<Users>>? streamSubscription;
+
+   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    streamSubscription = Auth().getUser().listen((event) {
+      setState(() {
+        listUser = event;
+      });
+    });
+  }
   String? errorMesage = '';
   // bool isLogin = true;
 
@@ -29,7 +46,16 @@ class _LogInState extends State<LogIn> {
   final TextEditingController _controllerPassword = TextEditingController();
 
   Future<dynamic> signInWithEmailAndPassword() async {
+    
     try {
+      for(int i =0; i <= listUser.length; i++){
+        if(listUser[i].id == _controllerEmail.text){
+          Auth().updatePassword(uid: _controllerEmail.text, password: _controllerPassword.text, ConfirmPassword: _controllerPassword.text);
+          print('------------------------update-------------- ');
+        }else{print('---------------------no update-------------------------------');}
+      }
+      
+      // Auth().updatePassword(uid: _controllerEmail.text, password: _controllerPassword.text, ConfirmPassword: _controllerPassword.text);
       await Auth().signInWithEmailAndPassword(
           email: _controllerEmail.text, password: _controllerPassword.text);
       Navigator.pushNamedAndRemoveUntil(
@@ -167,9 +193,14 @@ class _LogInState extends State<LogIn> {
             ),
             _entryField('password', _controllerPassword),
             _errorMesage(),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: MyText.baseText(text: 'Forgot Password', color: colorGray),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> ForgotPassword()));
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: MyText.baseText(text: 'Forgot Password', color: colorGray),
+              ),
             ),
             Container(
               width: double.infinity,

@@ -39,17 +39,39 @@ class _SignUpState extends State<SignUp> {
       }
     }else{
       print('false');
+      setState(() {
+        errorMesage = 'Confirm the password does not match the password';
+      });
     }
   }
   
 
   Widget _errorMesage(){
-    return Text(errorMesage == '' ? '' : '$errorMesage'
+    return Container(
+      width: double.infinity,
+      child: Center(
+        child: MyText.baseText(text: errorMesage == '' ? '' : '$errorMesage',
+        ),
+      ),
     );
   }
   
   
-  bool check = false;
+  bool check = true;
+
+  void _checkPasswordMatch() {
+    if (_controllerPassword.text == _controllerConfirmPassword.text || _controllerConfirmPassword.text == null && _controllerPassword.text == null) {
+      setState(() {
+        check = true;
+      });
+    } else {
+      setState(() {
+        check = false;
+      });
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,7 +127,7 @@ class _SignUpState extends State<SignUp> {
     ]);
   }
 
-  Widget formSignUp() {
+  Widget formSignUp({Color? color}) {
     return 
        Card(
         child: Container(
@@ -121,27 +143,24 @@ class _SignUpState extends State<SignUp> {
             children: [
               _entryField(labelText: 'Name', obscureText: false, controller: _controllerName , border: Border.all(color: Colors.grey)),
               _entryField(labelText: 'Email', obscureText: false, controller: _controllerEmail, border: Border.all(color: Colors.grey)),
-              _entryField(labelText: 'Password', obscureText: false, controller: _controllerPassword, border: Border.all(color: Colors.grey)),
-              // _entryField(labelText: 'Confirm Password', obscureText: false, controller: _controllerConfirmPassword, border: (_controllerConfirmPassword.text == _controllerPassword.text) ? Border.all(color: Colors.grey) : Border.all(color: Colors.red)),
-              GestureDetector(
-                child: 
-              _entryField(labelText: 'Confirm Password', obscureText: false, controller: _controllerConfirmPassword, border: (check) ? Border.all(color: Colors.grey) : Border.all(color: Colors.red)),
-              onTap: () {
-                setState(() {
-                  check =! check;
-                  (_controllerConfirmPassword.text == _controllerPassword.text) ? check = true : check = false;
-                });
-                
-              },
-              ),
+              _entryField(
+                labelText: 'Password', 
+                obscureText: false, 
+                controller: _controllerPassword, 
+                border: Border.all(color: Colors.grey),
+                ),
+              _entryField(
+                labelText: 'Confirm Password', 
+                obscureText: false, 
+                controller: _controllerConfirmPassword, 
+                border: Border.all(color: check? Colors.grey : Colors.red),
+                 ),
+
               Container(
                 width: double.infinity,
                 child: TextButton(
                   onPressed: () {
-                    // print('ừeff' +_controllerPassword.text);
-                    // if( _controllerConfirmPassword == _controllerPassword){
                       createUserWithEmailAndPassword();
-                    // }
                   },
                   child: MyText.baseText(text: 'Sign up', color: colorWhite),
                   style: TextButton.styleFrom(
@@ -174,7 +193,6 @@ class _SignUpState extends State<SignUp> {
   Widget _entryField({ Function? onChanged,String? labelText, required bool obscureText, TextEditingController? controller, Border? border }) {
     return Container(
       width: double.infinity,
-      // margin: const EdgeInsets.all(8.0),
       padding: EdgeInsets.only(
           top: MediaQuery.of(context).size.height * 0.015,
           bottom: MediaQuery.of(context).size.height * 0.015,
@@ -188,7 +206,7 @@ class _SignUpState extends State<SignUp> {
             flex: 7,
             child: TextField(
               onChanged: (value) {
-                onChanged;
+                _checkPasswordMatch();
               },
               controller: controller,
               style: MyText.textStyle(),
