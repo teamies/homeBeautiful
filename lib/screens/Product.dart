@@ -2,19 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:home_beautiful/components/buttonBar.dart';
 import 'package:home_beautiful/components/lineButton.dart';
 import 'package:home_beautiful/components/mytext.dart';
 import 'package:home_beautiful/components/notification.dart';
 import 'package:home_beautiful/core/_config.dart';
-import 'package:home_beautiful/models/favorites.dart';
 import 'package:home_beautiful/models/cart.dart';
 import 'package:home_beautiful/models/product.dart';
-import 'package:home_beautiful/screens/Home.dart';
-import 'package:home_beautiful/screens/Review.dart';
-import 'package:home_beautiful/screens/SignUp.dart';
-import 'package:home_beautiful/screens/my_cart.dart';
-import 'package:home_beautiful/screens/product_favorites.dart';
+
 
 import '../models/databaseManage.dart';
 
