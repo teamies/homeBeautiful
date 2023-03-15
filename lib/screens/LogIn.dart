@@ -26,19 +26,7 @@ class LogIn extends StatefulWidget {
 }
 
 class _LogInState extends State<LogIn> {
-  List<Users> listUser = [];
-  StreamSubscription<List<Users>>? streamSubscription;
-
-   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    streamSubscription = Auth().getUser().listen((event) {
-      setState(() {
-        listUser = event;
-      });
-    });
-  }
+  
   String? errorMesage = '';
   // bool isLogin = true;
 
@@ -48,14 +36,7 @@ class _LogInState extends State<LogIn> {
   Future<dynamic> signInWithEmailAndPassword() async {
     
     try {
-      for(int i =0; i <= listUser.length; i++){
-        if(listUser[i].id == _controllerEmail.text){
-          Auth().updatePassword(uid: _controllerEmail.text, password: _controllerPassword.text, ConfirmPassword: _controllerPassword.text);
-          print('------------------------update-------------- ');
-        }else{print('---------------------no update-------------------------------');}
-      }
-      
-      // Auth().updatePassword(uid: _controllerEmail.text, password: _controllerPassword.text, ConfirmPassword: _controllerPassword.text);
+      Auth().updatePassword(uid: _controllerEmail.text, password: _controllerPassword.text, ConfirmPassword: _controllerPassword.text);
       await Auth().signInWithEmailAndPassword(
           email: _controllerEmail.text, password: _controllerPassword.text);
       Navigator.pushNamedAndRemoveUntil(

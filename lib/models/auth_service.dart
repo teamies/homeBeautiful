@@ -66,16 +66,11 @@ class Auth {
   }
 
   Future<DocumentSnapshot<Map<String, dynamic>>> getUserData(String userId) async {
-    final docRef = FirebaseFirestore.instance.collection('users').doc(userId);
+    final docRef = FirebaseFirestore.instance.collection('user').doc(userId);
     final docSnapshot = await docRef.get();
     return docSnapshot;
   }
   
-  Stream<List<Users>> getUser() {
-    return userCollection.snapshots().map((querySnapshot) {
-      return querySnapshot.docs.map((doc) => Users.fromFirestore(doc)).toList();
-    });
-  }
   // log out
   Future<void> signOut() async {
     await _firebaseAuth.signOut();
